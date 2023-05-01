@@ -20,6 +20,8 @@ OBJS = $(SRCS:.c=.o)
 
 CC = gcc -g
 CFLAGS = -Wall -Werror -Wextra
+MLX = MLX42/libmlx42.a 
+MLX_FLAG = -lglfw -L /Users/$(USER)/.brew/opt/glfw/lib
 NORM = norminette
 RM = rm -rf
 
@@ -30,7 +32,7 @@ $(OBJS_DIR)%.o:%.c
 
 $(NAME):
 		${LIBFT}
-		${CC} ${CFLAGS} ${SRCS} -L${LIBFT_DIR} -lft -o ${NAME}
+		${CC} ${CFLAGS} ${SRCS} -L${LIBFT_DIR} -lft ${MLX} ${MLX_FLAG} -framework OpenGL -framework AppKit -o ${NAME}
 #		@mv ${SRCS_DIR}*.o ${OBJS_DIR}
 		@echo "____Cub3D créé avec succès____"
 

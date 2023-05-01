@@ -35,7 +35,9 @@ int    First_Last_Line(char *line, t_parse *parse)
     int     i;
 
     i = -1;
-    if (line[++i] == '1' || line[i] == '0')
+	while (ft_isspace(line[++i]) == 0)
+		;
+    if (line[i] == '1' || line[i] == '0')
     {
         while (line[++i] == '1')
             ;
@@ -56,13 +58,13 @@ void    Middle_Line(char *line, t_parse *parse)
     int i;
 
     i = -1;
-    while (line[++i] == '1')
+    while (line[++i] == '1' || ft_isspace(line[i]) == 0)
         ;
     while (line[i] == '0' || ft_charsetcmp(line[i], "NESW") == 0)
     {
-        if (ft_charsetcmp(line[i], "NESW") == 0 && parse->map->player == false)
-            parse->map->player = true;
-        else if (ft_charsetcmp(line[i], "NESW") == 0 && parse->map->player == true)
+        if (ft_charsetcmp(line[i], "NESW") == 0 && parse->map->player == 0)
+            parse->map->player = line[i];
+        else if (ft_charsetcmp(line[i], "NESW") == 0 && parse->map->player != 0)
         {
             parse->error = MAP;
             return ;

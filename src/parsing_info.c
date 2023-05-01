@@ -57,6 +57,8 @@ void	ParseColor(t_parse *data, char *line, int j)
         else if (data->error == GOOD && j == 5)
             data->CeilingColor |= id_color;
         nb_bits -= 8;
+		i += k;
+		hex = xfree(hex);
 	}
 }
 
@@ -90,8 +92,8 @@ int ParseInfo(char *map)
         return (-1);
     while ((easy_gnl(fd, MapCheck)) > 0 && MapCheck->error == GOOD)
 		;
-    printf("%s\n%s\n%s\n%s\n%u\n%u\n", MapCheck->NO, MapCheck->SO, MapCheck->WE,\
-        MapCheck->EA, MapCheck->FloorColor, MapCheck->CeilingColor);
+    printf("%s\n%s\n%s\n%s\n%u\n%u\n%c\n", MapCheck->NO, MapCheck->SO, MapCheck->WE,\
+        MapCheck->EA, MapCheck->FloorColor, MapCheck->CeilingColor, MapCheck->map->player);
     close(fd);
 	if (MapCheck->map->first_line != true || MapCheck->map->last_line != true)
 		MapCheck->error = MAP;

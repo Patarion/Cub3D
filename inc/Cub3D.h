@@ -23,7 +23,7 @@ typedef struct s_map_line {
 
 typedef struct s_map {
     char    *adj_line_len;
-    bool    player;
+    char    player;
     bool    first_line;
     bool    last_line;
     char    *map_layout;
