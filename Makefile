@@ -1,7 +1,9 @@
 NAME = cub3d
 
 LIBFT_DIR = inc/Libft/
+MLX_DIR = MLX42
 LIBFT = ${MAKE} --silent -C ${LIBFT_DIR}
+MLX_MAKE = ${MAKE} --silent -C ${MLX_DIR}
 
 OBJS_DIR = obj/
 SRCS_DIR = src/
@@ -34,6 +36,7 @@ $(OBJS_DIR)%.o:%.c
 
 $(NAME):
 		${LIBFT}
+		${MLX_MAKE}
 		${CC} ${CFLAGS} ${SRCS} -L${LIBFT_DIR} -lft ${MLX} ${MLX_FLAG} -framework OpenGL -framework AppKit -o ${NAME}
 #		@mv ${SRCS_DIR}*.o ${OBJS_DIR}
 		@echo "____Cub3D créé avec succès____"
@@ -48,6 +51,9 @@ clean:
 		${RM} ${NAME} ${NAME}.dSYM
 		${RM} mlx
 		${RM} ${OBJS_DIR}/*.o
+		${RM} ${LIBFT_DIR}/*.o
+		${RM} ${LIBFT_DIR}/*.a
+		${RM} ${MLX_DIR}/*.a
 		@echo "____L'exécutable a été supprimé____"
 fclean: clean
 
