@@ -60,6 +60,10 @@ void	ParseColor(t_parse *data, char *line, int j)
 		i += k;
 		hex = xfree(hex);
 	}
+	if (j == 4)
+		data->treat_Floor = true;
+	else if (j == 5)
+		data->treat_Ceiling = true;
 }
 
 int ParseName(char *map)
@@ -95,12 +99,7 @@ int ParseInfo(char *map)
     printf("%s\n%s\n%s\n%s\n%u\n%u\n%c\n", MapCheck->NO, MapCheck->SO, MapCheck->WE,\
         MapCheck->EA, MapCheck->FloorColor, MapCheck->CeilingColor, MapCheck->map->player);
     close(fd);
-	if (MapCheck->map->first_line != true || MapCheck->map->last_line != true)
-		MapCheck->error = MAP;
-    if (MapCheck->error != GOOD)
-        error_handler(MapCheck);
-    clear_data(MapCheck);
-    MapCheck = xfree(MapCheck);
+	check_ParseInfo(MapCheck);
     return (0);
 }
 
