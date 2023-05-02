@@ -11,6 +11,8 @@ t_parse *InitCheck()
     data->WE = NULL;
     data->FloorColor = 0;
     data->CeilingColor = 0;
+	data->treat_Floor = false;
+	data->treat_Ceiling = false;
 	data->error = GOOD;
     data->map = malloc(sizeof(t_map));
     data->map->adj_line_len = ft_calloc(4, sizeof(int));

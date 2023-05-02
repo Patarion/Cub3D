@@ -11,7 +11,7 @@
 static const char *g_side_tab[7] = {"NO ", "SO ", "WE ", "EA ", "F ", "C ", NULL};
 static const char *g_dir_tab[5] = {"N", "E", "S", "W", NULL};
 
-enum e_error_code	{GOOD, PATH, COLOR, MAP};
+enum e_error_code	{GOOD, PATH, COLOR, MAP, CUB_FILE};
 
 typedef struct s_map_line {
     char    *line;
@@ -39,6 +39,8 @@ typedef struct s_parse {
     char    			*EA;
     unsigned int		FloorColor;
     unsigned int		CeilingColor;
+	bool				treat_Floor;
+	bool				treat_Ceiling;
     t_map               *map;
 	enum e_error_code	error;
 } t_parse;
@@ -54,5 +56,7 @@ void            clear_data(t_parse *data);
 unsigned int	ft_Uatoi(const char *str, t_parse *data);
 void            error_handler(t_parse *data);
 void            ParseMap(char *line, t_parse *parse);
+void			check_ParseInfo(t_parse *data);
+void			map_space_handler(char *line, int *i, t_parse *parse);
 
 #endif

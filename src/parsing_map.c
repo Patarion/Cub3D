@@ -39,7 +39,7 @@ int    First_Last_Line(char *line, t_parse *parse)
 		;
     if (line[i] == '1' || line[i] == '0')
     {
-        while (line[++i] == '1')
+        while (line[++i] == '1' || ft_isspace(line[i]) == 0)
             ;
         if ((line[i] == '0' && line[i + 1] == '\0') || line[i] == '\0')
         {
@@ -60,7 +60,7 @@ void    Middle_Line(char *line, t_parse *parse)
     i = -1;
     while (line[++i] == '1' || ft_isspace(line[i]) == 0)
         ;
-    while (line[i] == '0' || ft_charsetcmp(line[i], "NESW") == 0)
+    while (line[i] != '\0')
     {
         if (ft_charsetcmp(line[i], "NESW") == 0 && parse->map->player == 0)
             parse->map->player = line[i];
@@ -69,12 +69,8 @@ void    Middle_Line(char *line, t_parse *parse)
             parse->error = MAP;
             return ;
         }
-        i++;
-        while (line[i] == '1')
-            i++;
+		map_space_handler(line, &i, parse);
     }
-    if (line[i] != '\0')
-        parse->error = MAP;
 }
 
 void ParseMap(char *line, t_parse *parse)
@@ -88,4 +84,29 @@ void ParseMap(char *line, t_parse *parse)
             Middle_Line(line, parse);
         nb_line ++;
     }
+}
+
+void	map_space_handler(char *line, int *i, t_parse *parse)
+{
+	int	k;
+
+	k = *i;
+	if (line[k] == '1' && ft_isspace(line[k + 1]) == 0)
+	{
+			while (ft_isspace(line[++k]) == 0)
+				;
+			if (line[k] == '1' || line[k] == '\0')
+				*i = k;
+	}
+	else if (line[k] == '0' && ft_isspace(line[k + 1]) == 0)
+	{
+		while (ft_isspace(line[++k]) == 0)
+			;
+		if (line[k] == '\0')
+			parse->error = MAP;
+		*i = k;
+		return ;
+	}
+	else
+		(*i)++;
 }

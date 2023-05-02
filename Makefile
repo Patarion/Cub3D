@@ -16,6 +16,8 @@ SRCS = 	src/main.c\
  		src/get.c\
  		src/error.c\
 
+SRCS_TEST = test/main.c
+
 OBJS = $(SRCS:.c=.o)
 
 CC = gcc -g
@@ -36,8 +38,15 @@ $(NAME):
 #		@mv ${SRCS_DIR}*.o ${OBJS_DIR}
 		@echo "____Cub3D créé avec succès____"
 
+mlx:
+		${LIBFT}
+		${CC} ${CFLAGS} ${SRCS_TEST} -L${LIBFT_DIR} -lft ${MLX} ${MLX_FLAG} -framework OpenGL -framework AppKit -o mlx
+# 		@mv ${SRCS_DIR}*.o ${OBJS_DIR}
+		@echo "____Les fichiers tests ont été créés____"
+
 clean:
 		${RM} ${NAME} ${NAME}.dSYM
+		${RM} mlx
 		${RM} ${OBJS_DIR}/*.o
 		@echo "____L'exécutable a été supprimé____"
 fclean: clean
