@@ -2,9 +2,10 @@
 
 int easy_gnl(int fd, t_parse *data)
 {
-    char    *line;
-    char    read_ret[2];
-    int     r_read;
+    char    	*line;
+    char    	read_ret[2];
+    int     	r_read;
+	static int	nb_line;
 
     line = NULL;
     r_read = 0;
@@ -17,12 +18,15 @@ int easy_gnl(int fd, t_parse *data)
         else
             line = ft_strjoin_free(line, read_ret);
     }
+	nb_line++;
 	if ((data->map->first_line == true && data->map->last_line == true)\
 		&& (read_ret[0] == '\n' || line != NULL))
 		data->error = CUB_FILE;
 	if (line != NULL && data->error == GOOD)
     	ParseLine(line, data);
     line = xfree(line);
+	if (data->map->first_line == true && data->MapBeg == 0) 
+		data->MapBeg = nb_line;
     return (r_read);
 }
 

@@ -14,6 +14,7 @@ t_parse *InitCheck()
 	data->treat_Floor = false;
 	data->treat_Ceiling = false;
 	data->error = GOOD;
+	data->MapBeg = 0;
     data->map = malloc(sizeof(t_map));
     data->map->adj_line_len = ft_calloc(4, sizeof(int));
     data->map->player = 0;
@@ -23,5 +24,6 @@ t_parse *InitCheck()
     data->map->player_x = 0;
     data->map->player_y = 0;
     data->map->direction = 0;
+	data->map->nb_lines = 0;
     return (data);
 }
