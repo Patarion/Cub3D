@@ -8,6 +8,7 @@
 #include <stdbool.h>
 #include <math.h>
 #include "Libft/libft.h"
+#include "../MLX42/include/MLX42/MLX42.h"
 
 static const char *g_side_tab[7] = {"NO ", "SO ", "WE ", "EA ", "F ", "C ", NULL};
 static const char *g_dir_tab[5] = {"N", "E", "S", "W", NULL};
@@ -30,6 +31,8 @@ typedef struct s_parse {
     char    			*SO;
     char    			*WE;
     char    			*EA;
+    mlx_t               *mlx;
+    mlx_image_t         *image;
     unsigned int		FloorColor;
     unsigned int		CeilingColor;
 	bool				treat_Floor;
@@ -39,18 +42,38 @@ typedef struct s_parse {
 	enum e_error_code	error;
 } t_parse;
 
+/*      PARSING_INFO    */
 void            ParseLine(char *line, t_parse* MapCheck);
 int             ParseInfo(char *map);
 void            ParsePath(t_parse* MapCheck, char *line, int j);
 void            ParseColor(t_parse *data, char *line, int j);
+
+/*      GET             */
 char            *GetPath(char *dir, char *line);
+void	        GetTmpMap(t_parse *data, int fd);
+
+/*      INIT_DATA       */
 t_parse         *InitCheck();
+
+/*      UTILS           */
 int             easy_gnl(int fd, t_parse *data);
-void            clear_data(t_parse *data);
 unsigned int	ft_Uatoi(const char *str, t_parse *data);
+
+/*      CLEAR           */
+void            clear_data(t_parse *data);
+
+/*      ERROR           */
 void            error_handler(t_parse *data);
-void            ParseMap(char *line, t_parse *parse);
 void			check_ParseInfo(t_parse *data);
+
+/*      PARSING_MAP     */
+void            ParseMap(char *line, t_parse *parse);
 void			map_space_handler(char *line, int *i, t_parse *parse);
+
+/*      INIT_GAME       */
+void    start_mlx(t_parse *data);
+
+/*      RAYCAST         */
+
 
 #endif
