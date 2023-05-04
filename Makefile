@@ -1,7 +1,7 @@
 NAME = cub3d
 
 LIBFT_DIR = inc/Libft/
-MLX_DIR = MLX42
+MLX_DIR = MLX42/
 LIBFT = ${MAKE} --silent -C ${LIBFT_DIR}
 MLX_MAKE = ${MAKE} --silent -C ${MLX_DIR}
 
@@ -50,10 +50,10 @@ mlx:
 clean:
 		${RM} ${NAME} ${NAME}.dSYM
 		${RM} mlx
-		${RM} ${OBJS_DIR}/*.o
-		${RM} ${LIBFT_DIR}/*.o
-		${RM} ${LIBFT_DIR}/*.a
-		${RM} ${MLX_DIR}/*.a
+		${RM} ${OBJS_DIR}*.o
+		${RM} ${LIBFT_DIR}*.o
+		${RM} ${LIBFT_DIR}*.a
+		${RM} ${MLX_DIR}*.a
 		@echo "____L'exécutable a été supprimé____"
 fclean: clean
 

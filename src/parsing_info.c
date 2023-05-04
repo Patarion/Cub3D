@@ -2,10 +2,10 @@
 
 void ParseLine(char *line, t_parse* MapCheck)
 {
-    int             i;
-    int             j;
-    static  bool    treat_map;
-    int             r_cmp;
+    int				i;
+    int				j;
+    static  bool		treat_map;
+    int				r_cmp;
 
     i = -1;
     j = 0;
@@ -96,8 +96,9 @@ int ParseInfo(char *map)
         return (-1);
     while ((easy_gnl(fd, MapCheck)) > 0 && MapCheck->error == GOOD)
 		;
-    printf("%s\n%s\n%s\n%s\n%u\n%u\n%c\n", MapCheck->NO, MapCheck->SO, MapCheck->WE,\
-        MapCheck->EA, MapCheck->FloorColor, MapCheck->CeilingColor, MapCheck->map->player);
+    printf("%s\n%s\n%s\n%s\n%u\n%u\n%c\n%d\n", MapCheck->NO, MapCheck->SO, MapCheck->WE,\
+        MapCheck->EA, MapCheck->FloorColor, MapCheck->CeilingColor, MapCheck->map->player,\
+		MapCheck->MapBeg);
     close(fd);
 	check_ParseInfo(MapCheck);
     return (0);

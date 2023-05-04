@@ -84,6 +84,9 @@ void ParseMap(char *line, t_parse *parse)
             Middle_Line(line, parse);
         nb_line ++;
     }
+	if (parse->map->last_line == true)
+		parse->map->nb_lines = nb_line;
+	printf("\n%d\n", nb_line);
 }
 
 void	map_space_handler(char *line, int *i, t_parse *parse)

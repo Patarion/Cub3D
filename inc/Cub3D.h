@@ -14,23 +14,15 @@ static const char *g_dir_tab[5] = {"N", "E", "S", "W", NULL};
 
 enum e_error_code	{GOOD, PATH, COLOR, MAP, CUB_FILE};
 
-typedef struct s_map_line {
-    char    *line;
-    int     line_nbr;
-    int     len;
-    bool    player;
-    int     player_x;
-} t_map_line;
-
 typedef struct s_map {
-    char    *adj_line_len;
-    char    player;
     bool    first_line;
     bool    last_line;
-    char    *map_layout;
+    char    player;
+    char    **map_layout;
     char    direction;
     int     player_x;
     int     player_y;
+	int		nb_lines;
 } t_map;
 
 typedef struct s_parse {
@@ -42,6 +34,7 @@ typedef struct s_parse {
     unsigned int		CeilingColor;
 	bool				treat_Floor;
 	bool				treat_Ceiling;
+	int					MapBeg;
     t_map               *map;
 	enum e_error_code	error;
 } t_parse;
