@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 11:37:06 by vjean             #+#    #+#             */
-/*   Updated: 2023/05/04 14:02:42 by vjean            ###   ########.fr       */
+/*   Updated: 2023/05/05 11:36:55 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,10 @@ int main(int argc, char **argv) {
 		return (-1);
 	}
 	if (ParseInfo(argv[1]) != 0)
+	{
 		printf("La map n'est pas valide ou n'a pas toutes les bonnes info");
-	else
-		start_mlx(&data); //start the "game"; open winden and have the map
+		return (-1);
+	}
+	start_mlx(&data); //start the "game"; open winden and have the map
 	return 0;
 }
