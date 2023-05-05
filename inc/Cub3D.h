@@ -54,9 +54,8 @@ void	        GetTmpMap(t_parse *data, int fd);
 
 /*      INIT_DATA       */
 t_parse         *InitCheck();
-
-/*      UTILS           */
-int             easy_gnl(int fd, t_parse *data);
+int             first_parse(int fd, t_parse *data);
+void            clear_data(t_parse *data);
 unsigned int	ft_Uatoi(const char *str, t_parse *data);
 
 /*      CLEAR           */
@@ -69,6 +68,9 @@ void			check_ParseInfo(t_parse *data);
 /*      PARSING_MAP     */
 void            ParseMap(char *line, t_parse *parse);
 void			map_space_handler(char *line, int *i, t_parse *parse);
+void			GetTmpMap(t_parse *data, int fd);
+void			print_double_tab(char **tab);
+char			*ez_gnl(int fd);
 
 /*      INIT_GAME       */
 void    start_mlx(t_parse *data);

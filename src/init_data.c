@@ -28,7 +28,6 @@ t_parse *InitCheck()
 	data->error = GOOD;
 	data->MapBeg = 0;
     data->map = malloc(sizeof(t_map));
-   // data->map->adj_line_len = ft_calloc(4, sizeof(int));
     data->map->player = 0;
     data->map->first_line = false;
     data->map->last_line = false;
