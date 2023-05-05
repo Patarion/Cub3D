@@ -94,13 +94,16 @@ int ParseInfo(char *map)
     fd = open(map, O_RDONLY);
     if (fd < 0)
         return (-1);
-    while ((easy_gnl(fd, MapCheck)) > 0 && MapCheck->error == GOOD)
+    while ((first_parse(fd, MapCheck)) > 0 && MapCheck->error == GOOD)
 		;
     printf("%s\n%s\n%s\n%s\n%u\n%u\n%c\n%d\n", MapCheck->NO, MapCheck->SO, MapCheck->WE,\
         MapCheck->EA, MapCheck->FloorColor, MapCheck->CeilingColor, MapCheck->map->player,\
 		MapCheck->MapBeg);
     close(fd);
 	check_ParseInfo(MapCheck);
+	if (MapCheck->error == GOOD)
+		fd = open(map, O_RDONLY);
+	GetTmpMap(MapCheck, fd);
     return (0);
 }
 

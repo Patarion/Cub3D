@@ -1,6 +1,6 @@
 #include "../inc/Cub3D.h"
 
-int easy_gnl(int fd, t_parse *data)
+int first_parse(int fd, t_parse *data)
 {
     char    	*line;
     char    	read_ret[2];
@@ -53,4 +53,37 @@ unsigned int	ft_Uatoi(const char *str, t_parse *data)
     if (nb > 255)
         data->error = COLOR;
     return (nb);
+}
+
+void	print_double_tab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i] != NULL)
+	{
+		printf("%s", tab[i]);
+		i++;
+	}
+}
+
+char	*ez_gnl(int fd)
+{
+	char    	*line;
+    char    	read_ret[2];
+    int     	r_read;
+
+	line = NULL;
+	r_read = 0;
+	read_ret[1] = '\0';
+	while ((r_read = read(fd, &read_ret, 1)) > 0)
+	{
+        if (line == NULL)
+            line = ft_strdup(read_ret);
+        else
+            line = ft_strjoin_free(line, read_ret);
+		if (read_ret[0] == '\n')
+            break ;
+    }
+	return (line);
 }

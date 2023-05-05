@@ -44,12 +44,15 @@ void            ParsePath(t_parse* MapCheck, char *line, int j);
 void            ParseColor(t_parse *data, char *line, int j);
 char            *GetPath(char *dir, char *line);
 t_parse         *InitCheck();
-int             easy_gnl(int fd, t_parse *data);
+int             first_parse(int fd, t_parse *data);
 void            clear_data(t_parse *data);
 unsigned int	ft_Uatoi(const char *str, t_parse *data);
 void            error_handler(t_parse *data);
 void            ParseMap(char *line, t_parse *parse);
 void			check_ParseInfo(t_parse *data);
 void			map_space_handler(char *line, int *i, t_parse *parse);
+void			GetTmpMap(t_parse *data, int fd);
+void			print_double_tab(char **tab);
+char			*ez_gnl(int fd);
 
 #endif

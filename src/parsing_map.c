@@ -35,7 +35,7 @@ int    First_Last_Line(char *line, t_parse *parse)
     int     i;
 
     i = -1;
-	while (ft_isspace(line[++i]) == 0)
+	while (line[++i] == 32)
 		;
     if (line[i] == '1' || line[i] == '0')
     {
@@ -58,7 +58,7 @@ void    Middle_Line(char *line, t_parse *parse)
     int i;
 
     i = -1;
-    while (line[++i] == '1' || ft_isspace(line[i]) == 0)
+    while (line[++i] == '1' || line[i] == 32)
         ;
     while (line[i] != '\0')
     {
