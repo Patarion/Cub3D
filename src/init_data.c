@@ -31,7 +31,7 @@ t_parse *InitCheck()
     data->map->player = 0;
     data->map->first_line = false;
     data->map->last_line = false;
-    data->map->map_layout = NULL;
+    data->map->map = NULL;
     data->map->player_x = 0;
     data->map->player_y = 0;
     data->map->direction = 0;

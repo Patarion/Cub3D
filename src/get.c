@@ -29,6 +29,31 @@ char	*GetPath(char *dir, char *line)
 	return (r_get);
 }
 
+void	GetPlayerPoint(t_map *map_data)
+{
+	int	x;
+	int	y;
+
+	x = 0;
+	y = 0;
+	while (map_data->map[y] != NULL)
+	{
+		while (map_data->map[y][x] != '\0')
+		{
+			if (ft_charsetcmp(map_data->map[y][x], "NSEW") == 0)
+			{
+				map_data->player_x = x;
+				map_data->player_y = y;
+				return ;
+			}
+			x++;
+		}
+		x = 0;
+		y++;
+	}
+}
+
+
 static void change_space(char *map)
 {
 	int	i;
@@ -56,13 +81,15 @@ void	GetTmpMap(t_parse *data, int fd)
 		r_gnl = xfree(ez_gnl(fd));
 		data->MapBeg--;
 	}
-	data->map->map_layout = malloc(sizeof(char *) * (data->map->nb_lines + 1));
+	data->map->map = malloc(sizeof(char *) * (data->map->nb_lines + 1));
 	while ((r_gnl = ez_gnl(fd)) != NULL)
 	{
-		data->map->map_layout[i] = r_gnl;
-		change_space(data->map->map_layout[i]);
+		data->map->map[i] = r_gnl;
+		change_space(data->map->map[i]);
 		i++;
 	}
-	data->map->map_layout[i] = NULL;
-	print_double_tab(data->map->map_layout);
+	data->map->map[i] = NULL;
+	print_double_tab(data->map->map);
+	GetPlayerPoint(data->map);
+	printf("Le joueur est à la position Y : %d et X : %d\n", data->map->player_y, data->map->player_x);
 }
