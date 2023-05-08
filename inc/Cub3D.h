@@ -10,6 +10,9 @@
 #include "Libft/libft.h"
 #include "../MLX42/include/MLX42/MLX42.h"
 
+#define w 1920 //screen width
+#define h 1080 //screen height
+
 static const char *g_side_tab[7] = {"NO ", "SO ", "WE ", "EA ", "F ", "C ", NULL};
 static const char *g_dir_tab[5] = {"N", "E", "S", "W", NULL};
 
@@ -26,6 +29,20 @@ typedef struct s_map {
 	int		nb_lines;
 } t_map;
 
+typedef struct s_raycast {
+    double  pos_playerX; //start position of player on x
+    double  pos_playerY; //start position of player on y
+    double  dir_playerX; //initial  director of vector of the player on x
+    double  dir_playerY; //initial director of vector of the player on y
+    double  plane_playX; //camera plane of the player on X
+    double  plane_playY; //camera plane of the player on Y
+    double  cameraX; //x-coordinate in camera space
+    double  ray_dirX; //ray direction on x
+    double  ray_dirY; //ray direction on y
+    int     mapX; //current square of the map, in the x axis
+    int     mapY; //current square of the map, in the y axis
+} t_raycast;
+
 typedef struct s_parse {
     char    			*NO;
     char    			*SO;
@@ -39,6 +56,7 @@ typedef struct s_parse {
 	bool				treat_Ceiling;
 	int					MapBeg;
     t_map               *map;
+    t_raycast           *ray;
 	enum e_error_code	error;
 } t_parse;
 
