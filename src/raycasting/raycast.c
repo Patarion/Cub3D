@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:15:04 by vjean             #+#    #+#             */
-/*   Updated: 2023/05/08 11:13:11 by vjean            ###   ########.fr       */
+/*   Updated: 2023/05/08 12:53:53 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,40 @@ void	init_struct(t_parse *data)
 	data->ray->plane_playY = 0.66;
 }
 
-void	where_am_i(data)
+void	where_am_i(t_parse *data)
 {
 	data->map->player_x = (int)data->ray->pos_playerX;
 	data->map->player_y = (int)data->ray->pos_playerY;
 }
 
-void	mesure_ray(data)
+void	mesure_ray(t_parse *data)
 {
-	
+	data->ray->furtherX_dist = fabs(1 / data->ray->ray_dirX);
+	data->ray->furtherY_dist = fabs(1 / data->ray->ray_dirY);
+}
+
+void	prep_dda(t_parse *data)
+{
+	if (data->ray->ray_dirX < 0) //direction derrière??
+	{
+		data->ray->step_x = -1;
+		data->ray->sideX_dist = (data->ray->pos_playerX - data->map->player_x) * data->ray->furtherX_dist;
+	}
+	else
+	{
+		data->ray->step_x = 1; //direction vers l'avant?
+		data->ray->sideX_dist = ((data->map->player_x + 1.0) - data->ray->pos_playerX) * data->ray->furtherX_dist;
+	}
+	if (data->ray->ray_dirY < 0) //direction derrière??
+	{
+		data->ray->step_y = -1;
+		data->ray->sideY_dist = (data->ray->pos_playerY - data->map->player_y) * data->ray->furtherY_dist;
+	}
+	else
+	{
+		data->ray->step_y = 1;
+		data->ray->sideY_dist = ((data->map->player_y + 1.0) - data->ray->pos_playerY) * data->ray->furtherY_dist;
+	}
 }
 
 void	go_raycast(t_parse *data)
@@ -46,6 +71,7 @@ void	go_raycast(t_parse *data)
 		data->ray->ray_dirY = (data->ray->dir_playerY + data->ray->plane_playY) * data->ray->cameraX;
 		where_am_i(data);
 		mesure_ray(data);
+		prep_dda(data);
 
 
 		index++;

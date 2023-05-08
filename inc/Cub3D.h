@@ -43,7 +43,8 @@ typedef struct s_raycast {
     double  sideY_dist; //length of ray from current pos to next y
     double  furtherX_dist; //distance/length of ray from 1 x-side to the next x-side; not at starting point; further on the line
     double  furtherY_dist; //distance/length of ray from 1 y-side to the next y-side
-
+    int     step_x; //to go in x first
+    int     step_y; //to go in y first
 } t_raycast;
 
 typedef struct s_parse {
