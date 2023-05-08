@@ -16,13 +16,13 @@
 static const char *g_side_tab[7] = {"NO ", "SO ", "WE ", "EA ", "F ", "C ", NULL};
 static const char *g_dir_tab[5] = {"N", "E", "S", "W", NULL};
 
-enum e_error_code	{GOOD, PATH, COLOR, MAP, CUB_FILE};
+enum e_error_code	{GOOD, PATH, COLOR, MAP, PLAYER, CUB_FILE};
 
 typedef struct s_map {
     bool    first_line;
     bool    last_line;
     char    player;
-    char    **map_layout;
+    char    **map;
     char    direction;
     int     player_x;
     int     player_y;
@@ -89,6 +89,7 @@ void			map_space_handler(char *line, int *i, t_parse *parse);
 void			GetTmpMap(t_parse *data, int fd);
 void			print_double_tab(char **tab);
 char			*ez_gnl(int fd);
+void			flood_fill(t_parse *data, int y, int x);
 
 /*      INIT_GAME       */
 void    start_mlx(t_parse *data);

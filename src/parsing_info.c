@@ -118,6 +118,10 @@ int ParseInfo(char *map)
 	if (MapCheck->error == GOOD)
 		fd = open(map, O_RDONLY);
 	GetTmpMap(MapCheck, fd);
+	flood_fill(MapCheck, MapCheck->map->player_y, MapCheck->map->player_x);
+	if (MapCheck->error != GOOD)
+		error_handler(MapCheck);
+	print_double_tab(MapCheck->map->map);
     return (0);
 }
 

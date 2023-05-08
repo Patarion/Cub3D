@@ -77,6 +77,7 @@ void	print_double_tab(char **tab)
 		printf("%s", tab[i]);
 		i++;
 	}
+	printf("\n");
 }
 
 char	*ez_gnl(int fd)
@@ -98,4 +99,33 @@ char	*ez_gnl(int fd)
             break ;
     }
 	return (line);
+}
+
+void	flood_fill(t_parse *data, int y, int x)
+{
+	int	i;
+
+	i = 0;
+	while (data->map->map[i])
+		i++;
+	if ((y - 1 < 0 || x - 1 < 0 || y + 1 >= i
+			|| x + 1 >= ft_strlen(data->map->map[y]))
+			&& ft_strchr("0", data->map->map[y][x]))
+		{
+			data->error = MAP;
+			error_handler(data);
+		}
+	if (data->map->map[y][x] == '0'
+		|| ft_charsetcmp(data->map->map[y][x], "NSEW") == 0)
+		data->map->map[y][x] = '.';
+	else
+		return ;
+	flood_fill(data, y, x - 1);
+	flood_fill(data, y + 1, x);
+	flood_fill(data, y, x + 1);
+	flood_fill(data, y - 1, x);
+	flood_fill(data, y + 1, x + 1);
+	flood_fill(data, y + 1, x - 1);
+	flood_fill(data, y - 1, x + 1);
+	flood_fill(data, y - 1, x - 1);
 }
