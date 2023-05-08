@@ -29,6 +29,19 @@ char	*GetPath(char *dir, char *line)
 	return (r_get);
 }
 
+static void change_space(char *map)
+{
+	int	i;
+
+	i = 0;
+	while (map[i] != '\0')
+	{
+		if (map[i] == 32)
+			map[i] = '1';
+		i++;
+	}
+}
+
 void	GetTmpMap(t_parse *data, int fd)
 {
 	char	*r_gnl;
@@ -47,6 +60,7 @@ void	GetTmpMap(t_parse *data, int fd)
 	while ((r_gnl = ez_gnl(fd)) != NULL)
 	{
 		data->map->map_layout[i] = r_gnl;
+		change_space(data->map->map_layout[i]);
 		i++;
 	}
 	data->map->map_layout[i] = NULL;

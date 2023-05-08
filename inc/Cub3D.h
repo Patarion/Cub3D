@@ -13,7 +13,7 @@
 static const char *g_side_tab[7] = {"NO ", "SO ", "WE ", "EA ", "F ", "C ", NULL};
 static const char *g_dir_tab[5] = {"N", "E", "S", "W", NULL};
 
-enum e_error_code	{GOOD, PATH, COLOR, MAP, CUB_FILE};
+enum e_error_code	{GOOD, PATH, COLOR, MAP, PLAYER, CUB_FILE};
 
 typedef struct s_map {
     bool    first_line;
