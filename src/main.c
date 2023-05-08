@@ -14,7 +14,7 @@
 
 int main(int argc, char **argv) {
 	
-	t_parse	data;
+//	t_parse	data;
 	
 	if (argc != 2)
 	{
@@ -26,6 +26,7 @@ int main(int argc, char **argv) {
 		printf("La map n'est pas valide ou n'a pas toutes les bonnes info");
 		return (-1);
 	}
-	start_raycast(&data); //start the "game"; open winden and have the map
+  if (data->error == GOOD)
+	  start_raycast(&data); //start the "game"; open winden and have the map
 	return 0;
 }

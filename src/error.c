@@ -23,6 +23,8 @@ void error_handler(t_parse *data)
         printf("La carte fournise a une erreur de format\n");
 	else if (data->error == CUB_FILE)
 		printf("Le fichier a une erreur de format ou de code 18\n");
+	else if (data->error == PLAYER)
+		printf("La position du joueur est soit manquante ou multiple\n");
     clear_data(data);
     data = xfree(data);
     exit(0);
@@ -31,13 +33,17 @@ void error_handler(t_parse *data)
 
 void	check_ParseInfo(t_parse *data)
 {
-	if (data->NO == NULL || data->SO == NULL || data->WE == NULL\
+	if (data->error != GOOD)
+		;
+	else if (data->NO == NULL || data->SO == NULL || data->WE == NULL\
 		|| data->EA == NULL)
 		data->error = PATH;
 	else if (data->map->first_line == false || data->map->last_line == false)
 		data->error = MAP;
 	else if (data->treat_Ceiling == false || data->treat_Floor == false)
 		data->error = COLOR;
+	else if (data->map->player == 0 || data->map->player == 'Z')
+		data->error = PLAYER;
 	if (data->error != GOOD)
 		error_handler(data);
 }
