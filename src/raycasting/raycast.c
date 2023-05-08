@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:15:04 by vjean             #+#    #+#             */
-/*   Updated: 2023/05/08 09:28:42 by vjean            ###   ########.fr       */
+/*   Updated: 2023/05/08 11:13:11 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,17 @@ void	init_struct(t_parse *data)
 	data->ray->plane_playY = 0.66;
 }
 
+void	where_am_i(data)
+{
+	data->map->player_x = (int)data->ray->pos_playerX;
+	data->map->player_y = (int)data->ray->pos_playerY;
+}
+
+void	mesure_ray(data)
+{
+	
+}
+
 void	go_raycast(t_parse *data)
 {
 	int	index;
@@ -33,7 +44,8 @@ void	go_raycast(t_parse *data)
 		data->ray->cameraX = (2 * index) / (double)w - 1; //x-coordinate in camera space
 		data->ray->ray_dirX = (data->ray->dir_playerX + data->ray->plane_playX) * data->ray->cameraX; //COMMENT might need to delete or change brackets... **to change priority of operation. below too
 		data->ray->ray_dirY = (data->ray->dir_playerY + data->ray->plane_playY) * data->ray->cameraX;
-		where_am_i(data, index);
+		where_am_i(data);
+		mesure_ray(data);
 
 
 		index++;
