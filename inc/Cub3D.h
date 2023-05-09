@@ -43,10 +43,14 @@ typedef struct s_raycast {
     double  sideY_dist; //length of ray from current pos to next y
     double  furtherX_dist; //distance/length of ray from 1 x-side to the next x-side; not at starting point; further on the line
     double  furtherY_dist; //distance/length of ray from 1 y-side to the next y-side
+    double  perpendicular_wallDist; //distance/length from the point hit on the wall to the "camera plane" line.
     int     step_x; //to go in x first
     int     step_y; //to go in y first
     int     hit; //flag to check if a wall was hit or not; 0 = no hit
     int     side; //flag to check if it was a NS or EW wall hit. sideX_dist < sideY_dist = side 0. sideX_dist > sideY_dist = side 1.
+    int     line_height; //to know the height of the line to draw
+    int     draw_start_pt;
+    int     draw_end_pt;
 } t_raycast;
 
 typedef struct s_parse {
