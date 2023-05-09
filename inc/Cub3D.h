@@ -62,7 +62,7 @@ typedef struct s_parse {
 
 /*      PARSING_INFO    */
 void            ParseLine(char *line, t_parse* MapCheck);
-int             ParseInfo(char *map);
+t_parse         *ParseInfo(char *map);
 void            ParsePath(t_parse* MapCheck, char *line, int j);
 void            ParseColor(t_parse *data, char *line, int j);
 
@@ -90,11 +90,12 @@ void			GetTmpMap(t_parse *data, int fd);
 void			print_double_tab(char **tab);
 char			*ez_gnl(int fd);
 void			flood_fill(t_parse *data, int y, int x);
+void			print_info(t_parse *data);
 
 /*      INIT_GAME       */
 void    start_mlx(t_parse *data);
 
 /*      RAYCAST         */
-
+void	start_raycast(t_parse *data);
 
 #endif

@@ -14,6 +14,7 @@
 
 void	init_struct(t_parse *data)
 {
+	data->ray = malloc(sizeof(t_raycast));
 	data->ray->pos_playerX = 22; //devrait peut-être aller chercher la position où est N dans la map
 	data->ray->pos_playerY = 12;
 	data->ray->dir_playerX = -1; //devrait chercher si player est N, W, E or S
@@ -33,7 +34,7 @@ void	go_raycast(t_parse *data)
 		data->ray->cameraX = (2 * index) / (double)w - 1; //x-coordinate in camera space
 		data->ray->ray_dirX = (data->ray->dir_playerX + data->ray->plane_playX) * data->ray->cameraX; //COMMENT might need to delete or change brackets... **to change priority of operation. below too
 		data->ray->ray_dirY = (data->ray->dir_playerY + data->ray->plane_playY) * data->ray->cameraX;
-		where_am_i(data, index);
+//		where_am_i(data, index);
 
 
 		index++;
