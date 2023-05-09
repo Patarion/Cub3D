@@ -47,3 +47,11 @@ void	check_ParseInfo(t_parse *data)
 	if (data->error != GOOD)
 		error_handler(data);
 }
+
+void	print_info(t_parse *data)
+{
+	printf("%s\n%s\n%s\n%s\n%u\n%u\n%c\n%d\n", data->NO, data->SO, data->WE,\
+    data->EA, data->FloorColor, data->CeilingColor, data->map->player,\
+	data->MapBeg);
+	print_double_tab(data->map->map);
+}
