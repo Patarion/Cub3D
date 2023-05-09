@@ -45,6 +45,8 @@ typedef struct s_raycast {
     double  furtherY_dist; //distance/length of ray from 1 y-side to the next y-side
     int     step_x; //to go in x first
     int     step_y; //to go in y first
+    int     hit; //flag to check if a wall was hit or not; 0 = no hit
+    int     side; //flag to check if it was a NS or EW wall hit. sideX_dist < sideY_dist = side 0. sideX_dist > sideY_dist = side 1.
 } t_raycast;
 
 typedef struct s_parse {
@@ -99,6 +101,6 @@ void			flood_fill(t_parse *data, int y, int x);
 void    start_mlx(t_parse *data);
 
 /*      RAYCAST         */
-
+void	start_raycast(t_parse *data);
 
 #endif

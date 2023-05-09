@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:15:04 by vjean             #+#    #+#             */
-/*   Updated: 2023/05/08 12:53:53 by vjean            ###   ########.fr       */
+/*   Updated: 2023/05/09 08:13:06 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	mesure_ray(t_parse *data)
 	data->ray->furtherY_dist = fabs(1 / data->ray->ray_dirY);
 }
 
+//before DDA, need to calculate sideX_dist and sideY_dist as well as indicate
+//we step forward or backward on x axis and y axis
 void	prep_dda(t_parse *data)
 {
 	if (data->ray->ray_dirX < 0) //direction derrière??
@@ -58,6 +60,11 @@ void	prep_dda(t_parse *data)
 	}
 }
 
+void	dda_algo(t_parse *data)
+{
+	while (data)
+}
+
 void	go_raycast(t_parse *data)
 {
 	int	index;
@@ -69,9 +76,10 @@ void	go_raycast(t_parse *data)
 		data->ray->cameraX = (2 * index) / (double)w - 1; //x-coordinate in camera space
 		data->ray->ray_dirX = (data->ray->dir_playerX + data->ray->plane_playX) * data->ray->cameraX; //COMMENT might need to delete or change brackets... **to change priority of operation. below too
 		data->ray->ray_dirY = (data->ray->dir_playerY + data->ray->plane_playY) * data->ray->cameraX;
-		where_am_i(data);
+		where_am_i(data);//these following functions might not need to be in the while loop...
 		mesure_ray(data);
 		prep_dda(data);
+		dda_algo(data);
 
 
 		index++;
