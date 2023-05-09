@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:15:04 by vjean             #+#    #+#             */
-/*   Updated: 2023/05/09 12:49:27 by vjean            ###   ########.fr       */
+/*   Updated: 2023/05/09 13:43:30 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	init_struct(t_parse *data)
 {
+	data->image = mlx_new_image(data->mlx, w, h);
 	data->ray = malloc(sizeof(t_raycast));
 	data->ray->pos_playerX = 22; //devrait peut-être aller chercher la position où est N dans la map
 	data->ray->pos_playerY = 12;
@@ -80,7 +81,7 @@ void	dda_algo(t_parse *data)
 			data->ray->side = 1;
 		}
 		//hit a wall or not??
-		if (data->map->map[data->map->player_x][data->map->player_y] == 1)//or should I put > 0?? We know the wall is 1
+		if (data->map->map[data->map->player_y][data->map->player_x] == '1')//or should I put > 0?? We know the wall is 1
 			data->ray->hit = 1;
 	}
 }
@@ -116,9 +117,10 @@ void	add_some_colours(t_parse *data, int index)
 	i = data->ray->draw_start_pt;
 	while (i <= data->ray->draw_end_pt)
 	{
-		mlx_put_pixel(data->image, index, i, 0xFFFFFF);
+		mlx_put_pixel(data->image, index, i, 0xFF00FFFF);
 		i++;
 	}
+	mlx_image_to_window(data->mlx, data->image, 0, 0);
 }
 
 void	go_raycast(t_parse *data)
