@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:15:04 by vjean             #+#    #+#             */
-/*   Updated: 2023/05/09 12:49:27 by vjean            ###   ########.fr       */
+/*   Updated: 2023/05/09 14:20:31 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	init_struct(t_parse *data)
 {
+	data->ray = malloc(sizeof(t_raycast));
 	data->ray->pos_playerX = 22; //devrait peut-être aller chercher la position où est N dans la map
 	data->ray->pos_playerY = 12;
 	data->ray->dir_playerX = -1; //devrait chercher si player est N, W, E or S
@@ -98,10 +99,10 @@ void	draw_line(t_parse *data)
 	data->ray->line_height = (int)(h / data->ray->perpendicular_wallDist);
 
 	//calculate lowest and highest pixel to fill in current "stripe"
-	data->ray->draw_start_pt = (-data->ray->line_height / 2) + (h / 2); //COMMENT might need to change the brackets; priority of operators
+	data->ray->draw_start_pt = -data->ray->line_height / 2 + h / 2; //FIXME might need to change the brackets; priority of operators
 	if (data->ray->draw_start_pt < 0)
 		data->ray->draw_start_pt = 0;
-	data->ray->draw_end_pt = (data->ray->line_height / 2) + (h / 2); //COMMENT might need to change brackets for priority of operators
+	data->ray->draw_end_pt = (data->ray->line_height / 2) + (h / 2); //FIXME might need to change brackets for priority of operators
 	if (data->ray->draw_end_pt >= h)
 		data->ray->draw_end_pt = h - 1;
 }
