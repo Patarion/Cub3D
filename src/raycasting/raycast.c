@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:15:04 by vjean             #+#    #+#             */
-/*   Updated: 2023/05/10 08:32:04 by vjean            ###   ########.fr       */
+/*   Updated: 2023/05/10 09:06:36 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	init_struct(t_parse *data)
 {
 	data->image = mlx_new_image(data->mlx, w, h);
 	data->ray = malloc(sizeof(t_raycast));
-	data->ray->pos_playerX = 22; //devrait peut-être aller chercher la position où est N dans la map
-	data->ray->pos_playerY = 12;
+	data->ray->pos_playerX = data->map->player_x; //devrait peut-être aller chercher la position où est N dans la map
+	data->ray->pos_playerY = data->map->player_y;
 	data->ray->dir_playerX = -1; //devrait chercher si player est N, W, E or S
 	data->ray->dir_playerY = 0;
 	data->ray->plane_playX = 0;
@@ -84,6 +84,7 @@ void	dda_algo(t_parse *data)
 		if (data->map->map[data->map->player_y][data->map->player_x] == '1')//or should I put > 0?? We know the wall is 1
 			data->ray->hit = 1;
 	}
+	data->ray->hit = 0;
 }
 
 void	get_perpendicular(t_parse *data)
@@ -100,12 +101,12 @@ void	draw_line(t_parse *data)
 	data->ray->line_height = (int)(h / data->ray->perpendicular_wallDist);
 
 	//calculate lowest and highest pixel to fill in current "stripe"
-	data->ray->draw_start_pt = (-data->ray->line_height / 2) + (h / 2); //FIXME might need to change the brackets; priority of operators
+	data->ray->draw_start_pt = -data->ray->line_height / 2 + h / 2; //BEDMAS
 	if (data->ray->draw_start_pt < 0)
 		data->ray->draw_start_pt = 0;
-	data->ray->draw_end_pt = (data->ray->line_height / 2) + (h / 2); //FIXME might need to change brackets for priority of operators
+	data->ray->draw_end_pt = data->ray->line_height / 2 + h / 2; //BEDMAS
 	if (data->ray->draw_end_pt >= h)
-		data->ray->draw_end_pt = h - 1; //take away minus 1
+		data->ray->draw_end_pt = h; //take away minus 1
 }
 
 void	add_some_colours(t_parse *data, int index)
@@ -122,7 +123,6 @@ void	add_some_colours(t_parse *data, int index)
 		i++;
 		pixels++;
 	}
-	mlx_image_to_window(data->mlx, data->image, 0, 0);
 }
 
 void	go_raycast(t_parse *data)
@@ -130,6 +130,7 @@ void	go_raycast(t_parse *data)
 	int	index;
 
 	index = 0;
+	mlx_image_to_window(data->mlx, data->image, 0, 0); //protect
 	while (index < w)
 	{
 		//calculate ray position and direction
@@ -156,6 +157,6 @@ void	start_raycast(t_parse *data)
 	}
 	init_struct(data);
 	go_raycast(data);
-	mlx_loop(data->mlx);
+	mlx_loop(data->mlx); //add keypress avant loop
 	mlx_terminate(data->mlx);
 }
