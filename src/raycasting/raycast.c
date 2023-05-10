@@ -16,8 +16,8 @@ void	init_struct(t_parse *data)
 {
 	data->image = mlx_new_image(data->mlx, w, h);
 	data->ray = malloc(sizeof(t_raycast));
-	data->ray->pos_playerX = 22; //devrait peut-être aller chercher la position où est N dans la map
-	data->ray->pos_playerY = 12;
+	data->ray->pos_playerX = data->map->player_x; //devrait peut-être aller chercher la position où est N dans la map
+	data->ray->pos_playerY = data->map->player_y;
 	data->ray->dir_playerX = -1; //devrait chercher si player est N, W, E or S
 	data->ray->dir_playerY = 0;
 	data->ray->plane_playX = 0;
@@ -100,10 +100,10 @@ void	draw_line(t_parse *data)
 	data->ray->line_height = (int)(h / data->ray->perpendicular_wallDist);
 
 	//calculate lowest and highest pixel to fill in current "stripe"
-	data->ray->draw_start_pt = -data->ray->line_height / 2 + h / 2; //FIXME might need to change the brackets; priority of operators
+	data->ray->draw_start_pt = -data->ray->line_height / 2 + h / 2; // BEDMAS
 	if (data->ray->draw_start_pt < 0)
 		data->ray->draw_start_pt = 0;
-	data->ray->draw_end_pt = data->ray->line_height / 2 + h / 2; //FIXME might need to change brackets for priority of operators
+	data->ray->draw_end_pt = data->ray->line_height / 2 + h / 2; // BEDMAS
 	if (data->ray->draw_end_pt >= h)
 		data->ray->draw_end_pt = h; //take away minus 1
 }
@@ -113,16 +113,13 @@ void	add_some_colours(t_parse *data, int index)
 	//mlx_put_pixel to draw the line or not??? and add colours?? Just need a uint32_t colours
 	//while loop tant que start est plus petit ou egal a end. A voir si besoin du egal ou non
 	int	i;
-	static int pixels;
 
 	i = data->ray->draw_start_pt;
 	while (i <= data->ray->draw_end_pt)
 	{
 		mlx_put_pixel(data->image, index, i, 0xFF00FFFF);
 		i++;
-		pixels++;
 	}
-	mlx_image_to_window(data->mlx, data->image, 0, 0);
 }
 
 void	go_raycast(t_parse *data)
@@ -130,6 +127,7 @@ void	go_raycast(t_parse *data)
 	int	index;
 
 	index = 0;
+	mlx_image_to_window(data->mlx, data->image, 0, 0);
 	while (index < w)
 	{
 		//calculate ray position and direction
