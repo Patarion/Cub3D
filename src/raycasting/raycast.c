@@ -113,12 +113,14 @@ void	add_some_colours(t_parse *data, int index)
 	//mlx_put_pixel to draw the line or not??? and add colours?? Just need a uint32_t colours
 	//while loop tant que start est plus petit ou egal a end. A voir si besoin du egal ou non
 	int	i;
+	static int pixels;
 
 	i = data->ray->draw_start_pt;
 	while (i <= data->ray->draw_end_pt)
 	{
 		mlx_put_pixel(data->image, index, i, 0xFF00FFFF);
 		i++;
+		pixels++;
 	}
 	mlx_image_to_window(data->mlx, data->image, 0, 0);
 }
