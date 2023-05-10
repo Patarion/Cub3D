@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:15:04 by vjean             #+#    #+#             */
-/*   Updated: 2023/05/09 14:20:31 by vjean            ###   ########.fr       */
+/*   Updated: 2023/05/10 08:04:52 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,9 @@ void	draw_line(t_parse *data)
 	data->ray->draw_start_pt = -data->ray->line_height / 2 + h / 2; //FIXME might need to change the brackets; priority of operators
 	if (data->ray->draw_start_pt < 0)
 		data->ray->draw_start_pt = 0;
-	data->ray->draw_end_pt = (data->ray->line_height / 2) + (h / 2); //FIXME might need to change brackets for priority of operators
+	data->ray->draw_end_pt = data->ray->line_height / 2 + h / 2; //FIXME might need to change brackets for priority of operators
 	if (data->ray->draw_end_pt >= h)
-		data->ray->draw_end_pt = h - 1;
+		data->ray->draw_end_pt = h; //take away minus 1
 }
 
 void	add_some_colours(t_parse *data, int index)
