@@ -49,7 +49,7 @@ void	prep_dda(t_parse *data)
 	else
 	{
 		data->ray->step_x = 1; //direction vers l'avant?
-		data->ray->sideX_dist = ((data->map->player_x + 1.0) - data->ray->pos_playerX) * data->ray->furtherX_dist;
+		data->ray->sideX_dist = (data->map->player_x + 1.0 - data->ray->pos_playerX) * data->ray->furtherX_dist;
 	}
 	if (data->ray->ray_dirY < 0) //direction derrière??
 	{
@@ -59,7 +59,7 @@ void	prep_dda(t_parse *data)
 	else
 	{
 		data->ray->step_y = 1;
-		data->ray->sideY_dist = ((data->map->player_y + 1.0) - data->ray->pos_playerY) * data->ray->furtherY_dist;
+		data->ray->sideY_dist = (data->map->player_y + 1.0 - data->ray->pos_playerY) * data->ray->furtherY_dist;
 	}
 }
 
@@ -106,7 +106,7 @@ void	draw_line(t_parse *data)
 		data->ray->draw_start_pt = 0;
 	data->ray->draw_end_pt = data->ray->line_height / 2 + h / 2; //BEDMAS
 	if (data->ray->draw_end_pt >= h)
-		data->ray->draw_end_pt = h; //take away minus 1
+		data->ray->draw_end_pt = h - 1; //take away minus 1
 }
 
 void	add_some_colours(t_parse *data, int index)
@@ -116,7 +116,11 @@ void	add_some_colours(t_parse *data, int index)
 	int	i;
 
 	i = data->ray->draw_start_pt;
-	while (i <= data->ray->draw_end_pt)
+	if (i % 50 == 0)
+	{
+		printf("Bon matin\n");
+	}
+	while (i < data->ray->draw_end_pt)
 	{
 		mlx_put_pixel(data->image, index, i, 0xFF00FFFF);
 		i++;
@@ -133,8 +137,8 @@ void	go_raycast(t_parse *data)
 	{
 		//calculate ray position and direction
 		data->ray->cameraX = (2 * index) / (double)w - 1; //x-coordinate in camera space
-		data->ray->ray_dirX = (data->ray->dir_playerX + data->ray->plane_playX) * data->ray->cameraX; //COMMENT might need to delete or change brackets... **to change priority of operation. below too
-		data->ray->ray_dirY = (data->ray->dir_playerY + data->ray->plane_playY) * data->ray->cameraX;
+		data->ray->ray_dirX = data->ray->dir_playerX + (data->ray->plane_playX * data->ray->cameraX); //COMMENT might need to delete or change brackets... **to change priority of operation. below too
+		data->ray->ray_dirY = data->ray->dir_playerY + (data->ray->plane_playY * data->ray->cameraX);
 		where_am_i(data);//these following functions might not need to be in the while loop...
 		mesure_ray(data);
 		prep_dda(data);
