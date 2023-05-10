@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:15:04 by vjean             #+#    #+#             */
-/*   Updated: 2023/05/10 08:04:52 by vjean            ###   ########.fr       */
+/*   Updated: 2023/05/10 09:06:36 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void	dda_algo(t_parse *data)
 		if (data->map->map[data->map->player_y][data->map->player_x] == '1')//or should I put > 0?? We know the wall is 1
 			data->ray->hit = 1;
 	}
+	data->ray->hit = 0;
 }
 
 void	get_perpendicular(t_parse *data)
@@ -100,10 +101,10 @@ void	draw_line(t_parse *data)
 	data->ray->line_height = (int)(h / data->ray->perpendicular_wallDist);
 
 	//calculate lowest and highest pixel to fill in current "stripe"
-	data->ray->draw_start_pt = -data->ray->line_height / 2 + h / 2; // BEDMAS
+	data->ray->draw_start_pt = -data->ray->line_height / 2 + h / 2; //BEDMAS
 	if (data->ray->draw_start_pt < 0)
 		data->ray->draw_start_pt = 0;
-	data->ray->draw_end_pt = data->ray->line_height / 2 + h / 2; // BEDMAS
+	data->ray->draw_end_pt = data->ray->line_height / 2 + h / 2; //BEDMAS
 	if (data->ray->draw_end_pt >= h)
 		data->ray->draw_end_pt = h; //take away minus 1
 }
@@ -127,7 +128,7 @@ void	go_raycast(t_parse *data)
 	int	index;
 
 	index = 0;
-	mlx_image_to_window(data->mlx, data->image, 0, 0);
+	mlx_image_to_window(data->mlx, data->image, 0, 0); //protect
 	while (index < w)
 	{
 		//calculate ray position and direction
@@ -154,6 +155,6 @@ void	start_raycast(t_parse *data)
 	}
 	init_struct(data);
 	go_raycast(data);
-	mlx_loop(data->mlx);
+	mlx_loop(data->mlx); //add keypress avant loop
 	mlx_terminate(data->mlx);
 }
