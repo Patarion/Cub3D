@@ -14,6 +14,7 @@
 
 void	init_struct(t_parse *data)
 {
+	data->image = mlx_new_image(data->mlx, w, h);
 	data->ray = malloc(sizeof(t_raycast));
 	data->ray->pos_playerX = 22; //devrait peut-être aller chercher la position où est N dans la map
 	data->ray->pos_playerY = 12;
@@ -80,7 +81,7 @@ void	dda_algo(t_parse *data)
 			data->ray->side = 1;
 		}
 		//hit a wall or not??
-		if (data->map->map[data->map->player_x][data->map->player_y] == 1)//or should I put > 0?? We know the wall is 1
+		if (data->map->map[data->map->player_y][data->map->player_x] == '1')//or should I put > 0?? We know the wall is 1
 			data->ray->hit = 1;
 	}
 }
@@ -112,13 +113,16 @@ void	add_some_colours(t_parse *data, int index)
 	//mlx_put_pixel to draw the line or not??? and add colours?? Just need a uint32_t colours
 	//while loop tant que start est plus petit ou egal a end. A voir si besoin du egal ou non
 	int	i;
+	static int pixels;
 
 	i = data->ray->draw_start_pt;
 	while (i <= data->ray->draw_end_pt)
 	{
-		mlx_put_pixel(data->image, index, i, 0xFFFFFF);
+		mlx_put_pixel(data->image, index, i, 0xFF00FFFF);
 		i++;
+		pixels++;
 	}
+	mlx_image_to_window(data->mlx, data->image, 0, 0);
 }
 
 void	go_raycast(t_parse *data)
