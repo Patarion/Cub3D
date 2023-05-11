@@ -125,15 +125,10 @@ t_parse *ParseInfo(char *map)
 void ParsePath(t_parse* MapCheck, char *line, int j)
 {
     int     i;
-    char    *dir;
 
     i = 0;
-	dir = NULL;
     while (ft_isspace(line[i]) == 0)
         i++;
-//    dir = ft_calloc(3, sizeof(char));
-//    ft_strlcpy(dir, &line[i], 3);
-//    dir = ft_charjoinfree(dir, ' ');
     i += 2;
     while (ft_isspace(line[++i]) == 0)
         ;
@@ -145,6 +140,4 @@ void ParsePath(t_parse* MapCheck, char *line, int j)
         MapCheck->WE = GetPath(&line[i]);
     else if (j == 3 && MapCheck->EA == NULL)
         MapCheck->EA = GetPath(&line[i]);
-//    dir = xfree(dir);
-//    dir = NULL;
 }
