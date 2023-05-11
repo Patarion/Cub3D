@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 14:25:05 by vjean             #+#    #+#             */
-/*   Updated: 2023/05/04 14:25:06 by vjean            ###   ########.fr       */
+/*   Updated: 2023/05/10 08:09:48 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,23 +96,20 @@ int ParseName(char *map)
     return (-1);
 }
 
-int ParseInfo(char *map)
+t_parse *ParseInfo(char *map)
 {
     t_parse *MapCheck;
     int     fd;
 
     fd = 0;
     if (ParseName(map)  != 0)
-        return (-1);
+        return (NULL);
     MapCheck = InitCheck();
     fd = open(map, O_RDONLY);
     if (fd < 0)
-        return (-1);
+        return (NULL);
     while ((first_parse(fd, MapCheck)) > 0 && MapCheck->error == GOOD)
 		;
-    printf("%s\n%s\n%s\n%s\n%u\n%u\n%c\n%d\n", MapCheck->NO, MapCheck->SO, MapCheck->WE,\
-        MapCheck->EA, MapCheck->FloorColor, MapCheck->CeilingColor, MapCheck->map->player,\
-		MapCheck->MapBeg);
     close(fd);
 	check_ParseInfo(MapCheck);
 	if (MapCheck->error == GOOD)
@@ -121,8 +118,8 @@ int ParseInfo(char *map)
 	flood_fill(MapCheck, MapCheck->map->player_y, MapCheck->map->player_x);
 	if (MapCheck->error != GOOD)
 		error_handler(MapCheck);
-	print_double_tab(MapCheck->map->map);
-    return (0);
+	//print_info(MapCheck);
+    return (MapCheck);
 }
 
 void ParsePath(t_parse* MapCheck, char *line, int j)

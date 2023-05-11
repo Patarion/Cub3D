@@ -9,7 +9,7 @@
 			"request": "launch",
 			"name": "Debug",
 			"program": "/Users/jgagnon/Desktop/Cub3D/cub3d",
-			"args": ["map.cub"],
+			"args": ["map2.cub"],
 			"cwd": "${workspaceFolder}"
 		}
 	]

@@ -24,8 +24,8 @@ typedef struct s_map {
     char    player;
     char    **map;
     char    direction;
-    int     player_x;
-    int     player_y;
+    int     player_x; //current square of the map, in the x axis (mapX)
+    int     player_y; //current square of the map, in the y axis (mapY)
 	int		nb_lines;
 } t_map;
 
@@ -39,8 +39,18 @@ typedef struct s_raycast {
     double  cameraX; //x-coordinate in camera space
     double  ray_dirX; //ray direction on x
     double  ray_dirY; //ray direction on y
-    int     mapX; //current square of the map, in the x axis
-    int     mapY; //current square of the map, in the y axis
+    double  sideX_dist; //length of ray from current pos to next x
+    double  sideY_dist; //length of ray from current pos to next y
+    double  furtherX_dist; //distance/length of ray from 1 x-side to the next x-side; not at starting point; further on the line
+    double  furtherY_dist; //distance/length of ray from 1 y-side to the next y-side
+    double  perpendicular_wallDist; //distance/length from the point hit on the wall to the "camera plane" line.
+    int     step_x; //to go in x first
+    int     step_y; //to go in y first
+    int     hit; //flag to check if a wall was hit or not; 0 = no hit
+    int     side; //flag to check if it was a NS or EW wall hit. sideX_dist < sideY_dist = side 0. sideX_dist > sideY_dist = side 1.
+    int     line_height; //to know the height of the line to draw
+    int     draw_start_pt;
+    int     draw_end_pt;
 } t_raycast;
 
 typedef struct s_parse {
@@ -62,7 +72,7 @@ typedef struct s_parse {
 
 /*      PARSING_INFO    */
 void            ParseLine(char *line, t_parse* MapCheck);
-int             ParseInfo(char *map);
+t_parse         *ParseInfo(char *map);
 void            ParsePath(t_parse* MapCheck, char *line, int j);
 void            ParseColor(t_parse *data, char *line, int j);
 
@@ -90,11 +100,12 @@ void			GetTmpMap(t_parse *data, int fd);
 void			print_double_tab(char **tab);
 char			*ez_gnl(int fd);
 void			flood_fill(t_parse *data, int y, int x);
+void			print_info(t_parse *data);
 
 /*      INIT_GAME       */
 void    start_mlx(t_parse *data);
 
 /*      RAYCAST         */
-
+void	start_raycast(t_parse *data);
 
 #endif
