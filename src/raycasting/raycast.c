@@ -159,6 +159,7 @@ void	start_raycast(t_parse *data)
 	}
 	init_struct(data);
 	go_raycast(data);
+//	mlx_key_hook(data->mlx, &key_event, (void*)data);
 	mlx_loop(data->mlx); //add keypress avant loop
 	mlx_terminate(data->mlx);
 }
