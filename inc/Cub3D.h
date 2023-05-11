@@ -77,7 +77,7 @@ void            ParsePath(t_parse* MapCheck, char *line, int j);
 void            ParseColor(t_parse *data, char *line, int j);
 
 /*      GET             */
-char            *GetPath(char *dir, char *line);
+char            *GetPath(char *line);
 void	        GetTmpMap(t_parse *data, int fd);
 
 /*      INIT_DATA       */

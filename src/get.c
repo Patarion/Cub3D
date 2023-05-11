@@ -12,7 +12,7 @@
 
 #include "../inc/Cub3D.h"
 
-char	*GetPath(char *dir, char *line)
+char	*GetPath(char *line)
 {
 	char	*r_get;
 	char	*path;
@@ -24,9 +24,9 @@ char	*GetPath(char *dir, char *line)
 	while (ft_isspace(line[i]) != 0 && line[i] != '\0')
 		i++;
 	path = ft_substr(line, 0, i);
-	r_get = ft_strjoin(dir, path);
-	path = xfree(path);
-	return (r_get);
+//	r_get = ft_strjoin(dir, path);
+//	path = xfree(path);
+	return (path);
 }
 
 void	GetPlayerPoint(t_map *map_data)
@@ -89,7 +89,7 @@ void	GetTmpMap(t_parse *data, int fd)
 		i++;
 	}
 	data->map->map[i] = NULL;
-	print_double_tab(data->map->map);
+//	print_double_tab(data->map->map);
 	GetPlayerPoint(data->map);
 	printf("Le joueur est à la position Y : %d et X : %d\n", data->map->player_y, data->map->player_x);
 }

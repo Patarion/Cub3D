@@ -118,7 +118,7 @@ t_parse *ParseInfo(char *map)
 	flood_fill(MapCheck, MapCheck->map->player_y, MapCheck->map->player_x);
 	if (MapCheck->error != GOOD)
 		error_handler(MapCheck);
-	//print_info(MapCheck);
+	print_info(MapCheck);
     return (MapCheck);
 }
 
@@ -128,22 +128,23 @@ void ParsePath(t_parse* MapCheck, char *line, int j)
     char    *dir;
 
     i = 0;
+	dir = NULL;
     while (ft_isspace(line[i]) == 0)
         i++;
-    dir = ft_calloc(3, sizeof(char));
-    ft_strlcpy(dir, &line[i], 3);
-    dir = ft_charjoinfree(dir, ' ');
+//    dir = ft_calloc(3, sizeof(char));
+//    ft_strlcpy(dir, &line[i], 3);
+//    dir = ft_charjoinfree(dir, ' ');
     i += 2;
     while (ft_isspace(line[++i]) == 0)
         ;
     if (j == 0 && MapCheck->NO == NULL)
-		MapCheck->NO = GetPath(dir, &line[i]);
+		MapCheck->NO = GetPath(&line[i]);
     else if (j == 1 && MapCheck->SO == NULL)
-        MapCheck->SO = GetPath(dir, &line[i]);
+        MapCheck->SO = GetPath(&line[i]);
     else if (j == 2 && MapCheck->WE == NULL)
-        MapCheck->WE = GetPath(dir, &line[i]);
+        MapCheck->WE = GetPath(&line[i]);
     else if (j == 3 && MapCheck->EA == NULL)
-        MapCheck->EA = GetPath(dir, &line[i]);
-    dir = xfree(dir);
-    dir = NULL;
+        MapCheck->EA = GetPath(&line[i]);
+//    dir = xfree(dir);
+//    dir = NULL;
 }
