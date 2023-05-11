@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:15:04 by vjean             #+#    #+#             */
-/*   Updated: 2023/05/10 09:06:36 by vjean            ###   ########.fr       */
+/*   Updated: 2023/05/11 13:52:57 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void	draw_line(t_parse *data)
 		data->ray->draw_start_pt = 0;
 	data->ray->draw_end_pt = data->ray->line_height / 2 + h / 2; //BEDMAS
 	if (data->ray->draw_end_pt >= h)
-		data->ray->draw_end_pt = h - 1; //take away minus 1
+		data->ray->draw_end_pt = h - 1;
 }
 
 void	add_some_colours(t_parse *data, int index)
@@ -115,14 +115,20 @@ void	add_some_colours(t_parse *data, int index)
 	//while loop tant que start est plus petit ou egal a end. A voir si besoin du egal ou non
 	int	i;
 
-	i = data->ray->draw_start_pt;
-	if (i % 50 == 0)
+	i = 0;
+	while (i < data->ray->draw_start_pt) //plafond
 	{
-		printf("Bon matin\n");
+		mlx_put_pixel(data->image, index, i, data->CeilingColor);
+		i++;
 	}
 	while (i < data->ray->draw_end_pt)
 	{
 		mlx_put_pixel(data->image, index, i, 0xFF00FFFF);
+		i++;
+	}
+	while (i < h - 1) //plancher
+	{
+		mlx_put_pixel(data->image, index, i, data->FloorColor);
 		i++;
 	}
 }
@@ -137,9 +143,9 @@ void	go_raycast(t_parse *data)
 	{
 		//calculate ray position and direction
 		data->ray->cameraX = (2 * index) / (double)w - 1; //x-coordinate in camera space
-		data->ray->ray_dirX = data->ray->dir_playerX + (data->ray->plane_playX * data->ray->cameraX); //COMMENT might need to delete or change brackets... **to change priority of operation. below too
+		data->ray->ray_dirX = data->ray->dir_playerX + (data->ray->plane_playX * data->ray->cameraX);
 		data->ray->ray_dirY = data->ray->dir_playerY + (data->ray->plane_playY * data->ray->cameraX);
-		where_am_i(data);//these following functions might not need to be in the while loop...
+		where_am_i(data);
 		mesure_ray(data);
 		prep_dda(data);
 		dda_algo(data);
@@ -159,7 +165,7 @@ void	start_raycast(t_parse *data)
 	}
 	init_struct(data);
 	go_raycast(data);
-//	mlx_key_hook(data->mlx, &key_event, (void*)data);
+	mlx_key_hook(data->mlx, key_event, (void*)data);
 	mlx_loop(data->mlx); //add keypress avant loop
 	mlx_terminate(data->mlx);
 }

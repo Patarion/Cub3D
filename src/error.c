@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 14:29:42 by vjean             #+#    #+#             */
-/*   Updated: 2023/05/04 14:29:46 by vjean            ###   ########.fr       */
+/*   Updated: 2023/05/11 13:55:38 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	check_ParseInfo(t_parse *data)
 		data->error = PLAYER;
 	if (data->error != GOOD)
 		error_handler(data);
+	data->CeilingColor |= 0x000000ff;
+	data->FloorColor |= 0x000000ff;
 }
 
 void	print_info(t_parse *data)

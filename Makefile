@@ -19,6 +19,7 @@ SRCS = 	src/main.c\
  		src/error.c\
 		src/raycasting/raycast.c\
 		src/cube/init_game.c\
+		src/cube/key_event.c\
 
 SRCS_TEST = test/main.c
 

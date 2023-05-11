@@ -107,5 +107,9 @@ void    start_mlx(t_parse *data);
 
 /*      RAYCAST         */
 void	start_raycast(t_parse *data);
+void	go_raycast(t_parse *data);
+
+/*		KEY_EVENT		*/
+void	key_event(struct mlx_key_data key, void *data);
 
 #endif
