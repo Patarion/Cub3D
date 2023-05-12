@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:15:04 by vjean             #+#    #+#             */
-/*   Updated: 2023/05/11 13:52:57 by vjean            ###   ########.fr       */
+/*   Updated: 2023/05/12 10:43:10 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,9 +121,12 @@ void	add_some_colours(t_parse *data, int index)
 		mlx_put_pixel(data->image, index, i, data->CeilingColor);
 		i++;
 	}
-	while (i < data->ray->draw_end_pt)
+	while (i < data->ray->draw_end_pt) //add texture here for walls
 	{
-		mlx_put_pixel(data->image, index, i, 0xFF00FFFF);
+		//need texture coordinates: texture_y and texture_x. Int or double? INT
+		//need to add a check to see side N, S, E, W to send the correct texture. In an if condition to set the position
+		//then, we will add the pixel of our textures
+		mlx_put_pixel(data->image, index, i, 0xFF00FFFF); //last arg will be int **array
 		i++;
 	}
 	while (i < h - 1) //plancher
@@ -152,6 +155,7 @@ void	go_raycast(t_parse *data)
 		get_perpendicular(data);
 		draw_line(data);
 		add_some_colours(data, index);
+		add_texture(data); //add it here or not??
 		index++;
 	}
 }

@@ -12,6 +12,8 @@
 
 #define w 1920 //screen width
 #define h 1080 //screen height
+#define texWidth 64
+#define texHeight 24
 
 static const char *g_side_tab[7] = {"NO ", "SO ", "WE ", "EA ", "F ", "C ", NULL};
 static const char *g_dir_tab[5] = {"N", "E", "S", "W", NULL};
@@ -27,8 +29,19 @@ typedef struct s_map {
     int     player_x; //current square of the map, in the x axis (mapX)
     int     player_y; //current square of the map, in the y axis (mapY)
 	int		nb_lines;
+    int     texture_we;
+    int     texture_ea;
+    int     texture_so;
+    int     texture_no;
+
 } t_map;
 
+typedef struct s_xpm{
+    xpm_t   *NO;
+    xpm_t   *SO;
+    xpm_t   *EA;
+    xpm_t   *WE;
+}   t_xpm;
 typedef struct s_raycast {
     double  pos_playerX; //start position of player on x
     double  pos_playerY; //start position of player on y
@@ -67,6 +80,7 @@ typedef struct s_parse {
 	int					MapBeg;
     t_map               *map;
     t_raycast           *ray;
+    t_xpm               *xpm;
 	enum e_error_code	error;
 } t_parse;
 
@@ -108,6 +122,9 @@ void    start_mlx(t_parse *data);
 /*      RAYCAST         */
 void	start_raycast(t_parse *data);
 void	go_raycast(t_parse *data);
+
+/*      TEXTURE         */
+void	add_texture(t_parse *data);
 
 /*		KEY_EVENT		*/
 void	key_event(struct mlx_key_data key, void *data);
