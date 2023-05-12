@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 08:47:20 by vjean             #+#    #+#             */
-/*   Updated: 2023/05/12 10:51:58 by vjean            ###   ########.fr       */
+/*   Updated: 2023/05/12 11:00:21 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,11 @@ void	path_to_xpm(t_parse *data)
 	data->xpm->SO = mlx_load_xpm42(data->SO);
 	if (!data->xpm->SO)
 		exit(1);//need to better deal error and free stuff
+}
+
+void	create_array_pixels(t_parse *data)
+{
+	data->map->array_textures = malloc(sizeof(int));
 }
 
 void	add_texture(t_parse *data)

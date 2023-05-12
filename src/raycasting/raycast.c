@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:15:04 by vjean             #+#    #+#             */
-/*   Updated: 2023/05/12 10:43:10 by vjean            ###   ########.fr       */
+/*   Updated: 2023/05/12 11:14:39 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ void	go_raycast(t_parse *data)
 		get_perpendicular(data);
 		draw_line(data);
 		add_some_colours(data, index);
-		add_texture(data); //add it here or not??
+		//add_texture(data); //add it here or not??
 		index++;
 	}
 }
@@ -165,7 +165,7 @@ void	start_raycast(t_parse *data)
 	if (!(data->mlx = mlx_init(w, h, "cub3d", true)))
 	{
 		mlx_strerror(mlx_errno); //fonction a utiliser pour gerer les erreurs
-		exit(EXIT_FAILURE);
+		exit(EXIT_FAILURE); //do we need to change the error message? to make sure stuff is free?
 	}
 	init_struct(data);
 	go_raycast(data);

@@ -33,6 +33,7 @@ typedef struct s_map {
     int     texture_ea;
     int     texture_so;
     int     texture_no;
+    int     **array_textures;
 
 } t_map;
 
