@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:15:04 by vjean             #+#    #+#             */
-/*   Updated: 2023/05/15 11:36:25 by vjean            ###   ########.fr       */
+/*   Updated: 2023/05/15 13:47:47 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ void	init_struct(t_parse *data)
 	data->ray = malloc(sizeof(t_raycast));
 	data->ray->pos_playerX = data->map->player_x; //devrait peut-être aller chercher la position où est N dans la map
 	data->ray->pos_playerY = data->map->player_y;
-	//init_player_pos(data);
-	data->ray->dir_playerX = -1; //devrait chercher si player est N, W, E or S
-	data->ray->dir_playerY = 0;
+	init_player_pos(data);
+	// data->ray->dir_playerX = -1; //devrait chercher si player est N, W, E or S
+	// data->ray->dir_playerY = 0;
 	data->ray->plane_playX = 0;
 	data->ray->plane_playY = 0.66;
 	data->ray->hit = 0;
@@ -187,16 +187,16 @@ void	go_raycast(t_parse *data)
 	while (index < w)
 	{
 		//calculate ray position and direction
-		data->ray->cameraX = (2 * index) / (double)w - 1; //x-coordinate in camera space
-		data->ray->ray_dirX = data->ray->dir_playerX + (data->ray->plane_playX * data->ray->cameraX);
-		data->ray->ray_dirY = data->ray->dir_playerY + (data->ray->plane_playY * data->ray->cameraX);
-		where_am_i(data);
-		mesure_ray(data);
-		prep_dda(data);
-		dda_algo(data);
-		get_perpendicular(data);
-		draw_line(data);
-		add_some_colours(data, index);
+		data->ray->cameraX = (2 * index) / (double)w - 1; //x-coordinate in camera space //good
+		data->ray->ray_dirX = data->ray->dir_playerX + (data->ray->plane_playX * data->ray->cameraX); //good
+		data->ray->ray_dirY = data->ray->dir_playerY + (data->ray->plane_playY * data->ray->cameraX); //good
+		where_am_i(data); //good
+	//	mesure_ray(data); //review
+	//	prep_dda(data); //review
+	//	dda_algo(data); //review
+	//	get_perpendicular(data); //review
+		draw_line(data); //good
+		add_some_colours(data, index); //good
 		//add_texture(data); //add it here or not??
 		index++;
 	}

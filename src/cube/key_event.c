@@ -8,7 +8,7 @@ void	rotate_cam(struct mlx_key_data key, t_raycast *ray)
 
 	oldDirX = ray->dir_playerX;
 	oldPlaneX = ray->plane_playX;
-	speed = 0.02;
+	speed = 0.06;
 	if (key.key == 262)
 	{
 		ray->dir_playerX = ray->dir_playerX * cos(-speed) - ray->dir_playerY * sin(-speed);
