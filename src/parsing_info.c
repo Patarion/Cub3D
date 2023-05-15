@@ -10,15 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
-
 #include "../inc/Cub3D.h"
 
 void ParseLine(char *line, t_parse* MapCheck)
 {
     int				i;
     int				j;
-    static  bool		treat_map;
+    static  bool	treat_map;
     int				r_cmp;
 
     i = -1;

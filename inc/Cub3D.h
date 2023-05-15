@@ -48,7 +48,7 @@ typedef struct s_raycast {
     int     step_y; //to go in y first
     int     hit; //flag to check if a wall was hit or not; 0 = no hit
     int     side; //flag to check if it was a NS or EW wall hit. sideX_dist < sideY_dist = side 0. sideX_dist > sideY_dist = side 1.
-    int     line_height; //to know the height of the line to draw
+    double  line_height; //to know the height of the line to draw
     int     draw_start_pt;
     int     draw_end_pt;
 } t_raycast;

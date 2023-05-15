@@ -33,8 +33,14 @@ void	where_am_i(t_parse *data)
 
 void	mesure_ray(t_parse *data)
 {
-	data->ray->furtherX_dist = fabs(1 / data->ray->ray_dirX);
-	data->ray->furtherY_dist = fabs(1 / data->ray->ray_dirY);
+	if (data->ray->ray_dirX == 0)
+		data->ray->furtherX_dist = 1e30;
+	else
+		data->ray->furtherX_dist = fabs(1 / data->ray->ray_dirX);
+	if (data->ray->ray_dirY == 0)
+		data->ray->furtherY_dist = 1e30;
+	else
+		data->ray->furtherY_dist = fabs(1 / data->ray->ray_dirY);
 }
 
 //before DDA, need to calculate sideX_dist and sideY_dist as well as indicate
@@ -98,8 +104,7 @@ void	get_perpendicular(t_parse *data)
 void	draw_line(t_parse *data)
 {
 	//to calculate height of line to draw on screen
-	data->ray->line_height = (int)(h / data->ray->perpendicular_wallDist);
-
+	data->ray->line_height = (h / data->ray->perpendicular_wallDist);
 	//calculate lowest and highest pixel to fill in current "stripe"
 	data->ray->draw_start_pt = -data->ray->line_height / 2 + h / 2; //BEDMAS
 	if (data->ray->draw_start_pt < 0)
