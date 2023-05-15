@@ -18,6 +18,7 @@ SRCS = 	src/main.c\
  		src/get.c\
  		src/error.c\
 		src/raycasting/raycast.c\
+		src/raycasting/texture.c\
 		src/cube/init_game.c\
 		src/cube/key_event.c\
 
