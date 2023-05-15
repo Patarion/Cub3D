@@ -6,22 +6,22 @@ void	rotate_cam(struct mlx_key_data key, t_raycast *ray)
 	double	oldPlaneX;
 	double	speed;
 
-	oldDirX = ray->dir_playerX;
-	oldPlaneX = ray->plane_playX;
+	oldDirX = ray->dir_X;
+	oldPlaneX = ray->plane_X;
 	speed = 0.06;
 	if (key.key == 262)
 	{
-		ray->dir_playerX = ray->dir_playerX * cos(-speed) - ray->dir_playerY * sin(-speed);
-		ray->dir_playerY = oldDirX * sin(-speed) + ray->dir_playerY * cos(-speed);
-		ray->plane_playX = ray->plane_playX * cos(-speed) - ray->plane_playY * sin(-speed);
-		ray->plane_playY = oldPlaneX * sin(-speed) + ray->plane_playY * cos(-speed);
+		ray->dir_X = ray->dir_X * cos(-speed) - ray->dir_Y * sin(-speed);
+		ray->dir_Y = oldDirX * sin(-speed) + ray->dir_Y * cos(-speed);
+		ray->plane_X = ray->plane_X * cos(-speed) - ray->plane_Y * sin(-speed);
+		ray->plane_Y = oldPlaneX * sin(-speed) + ray->plane_Y * cos(-speed);
 	}
 	else if (key.key == 263)
 	{
-		ray->dir_playerX = ray->dir_playerX * cos(speed) - ray->dir_playerY * sin(speed);
-		ray->dir_playerY = oldDirX * sin(speed) + ray->dir_playerY * cos(speed);
-		ray->plane_playX = ray->plane_playX * cos(speed) - ray->plane_playY * sin(speed);
-		ray->plane_playY = oldPlaneX * sin(speed) + ray->plane_playY * cos(speed);
+		ray->dir_X = ray->dir_X * cos(speed) - ray->dir_Y * sin(speed);
+		ray->dir_Y = oldDirX * sin(speed) + ray->dir_Y * cos(speed);
+		ray->plane_X = ray->plane_X * cos(speed) - ray->plane_Y * sin(speed);
+		ray->plane_Y = oldPlaneX * sin(speed) + ray->plane_Y * cos(speed);
 	}
 }
 
