@@ -1,11 +1,11 @@
-EA ./textures/Stardew-Brick-Wall-80s.xpm
-NO ./textures/Stardew-Brick-Wall-Dinosaur.xpm
+EA ./textures/Stardew-Brick-Wall-80s.xpm42
+NO ./textures/Stardew-Brick-Wall-Dinosaur.xpm42
 
-WE ./textures/Stardew-Brick-Wall-Multi-Colored.xpm
+WE ./textures/Stardew-Brick-Wall-Multi-Colored.xpm42
 
 jdfkhdsfjksd
 
-SO ./Stardew-Brick-Wall-Pizza.xpm
+SO ./textures/Stardew-Brick-Wall-Pizza.xpm42
 
 F 0,    180,     40
 C 0, 20,    		160

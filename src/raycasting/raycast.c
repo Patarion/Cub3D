@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:15:04 by vjean             #+#    #+#             */
-/*   Updated: 2023/05/12 11:14:39 by vjean            ###   ########.fr       */
+/*   Updated: 2023/05/15 11:01:18 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,10 +123,27 @@ void	add_some_colours(t_parse *data, int index)
 	}
 	while (i < data->ray->draw_end_pt) //add texture here for walls
 	{
+		//step 1: which orientation? N, S, E or W. look at my raycast. Which orientation in my grid
+		//step 2: raycast where am I? left to right and up and down. print data->xpm->EA (for example)
+//		if(side == 0 && rayDirX > 0) texX = texWidth - texX - 1;
+//      if(side == 1 && rayDirY < 0) texX = texWidth - texX - 1;
 		//need texture coordinates: texture_y and texture_x. Int or double? INT
 		//need to add a check to see side N, S, E, W to send the correct texture. In an if condition to set the position
 		//then, we will add the pixel of our textures
-		mlx_put_pixel(data->image, index, i, 0xFF00FFFF); //last arg will be int **array
+		if (data->ray->side == 1)
+		{
+			if (data->ray->ray_dirY < 0)
+				mlx_put_pixel(data->image, index, i, 0xFF6F00FF);
+			else
+				mlx_put_pixel(data->image, index, i, 0x870000FF);
+		}
+		else if (data->ray->side == 0)
+		{
+			if(data->ray->ray_dirX > 0)
+				mlx_put_pixel(data->image, index, i, 0xFF00FFFF); //last arg will be int **array
+			else
+				mlx_put_pixel(data->image, index, i, 0xF4D800FF);
+		}
 		i++;
 	}
 	while (i < h - 1) //plancher

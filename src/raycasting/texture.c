@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 08:47:20 by vjean             #+#    #+#             */
-/*   Updated: 2023/05/12 11:00:21 by vjean            ###   ########.fr       */
+/*   Updated: 2023/05/15 10:22:12 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@
 
 void	path_to_xpm(t_parse *data)
 {
-	data->xpm = malloc(sizeof(t_xpm));
+	data->xpm = malloc(sizeof(t_xpm) * 4);
 	data->xpm->EA = mlx_load_xpm42(data->EA);
 	if (!data->xpm->EA)
 		exit(1);//need to better deal error and free stuff
-	data->xpm->WE = mlx_load_xpm42(data->WE);
+	data->xpm->WE = mlx_load_xpm42(data->WE); //il faut que data->WE soit déjà en xpm42
 	if (!data->xpm->WE)
 		exit(1);//need to better deal error and free stuff
 	data->xpm->NO = mlx_load_xpm42(data->NO);
@@ -32,6 +32,7 @@ void	path_to_xpm(t_parse *data)
 	if (!data->xpm->SO)
 		exit(1);//need to better deal error and free stuff
 }
+
 
 void	create_array_pixels(t_parse *data)
 {
