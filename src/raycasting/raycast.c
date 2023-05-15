@@ -6,11 +6,35 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:15:04 by vjean             #+#    #+#             */
-/*   Updated: 2023/05/15 11:01:18 by vjean            ###   ########.fr       */
+/*   Updated: 2023/05/15 11:36:25 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/Cub3D.h"
+
+void	init_player_pos(t_parse *data)
+{
+	if (data->map->player == 'N')
+	{
+		data->ray->dir_playerX = 0;
+		data->ray->dir_playerY = 1;
+	}
+	else if (data->map->player == 'S')
+	{
+		data->ray->dir_playerX = 0;
+		data->ray->dir_playerY = -1;
+	}
+	else if (data->map->player == 'W')
+	{
+		data->ray->dir_playerX = -1;
+		data->ray->dir_playerY = 0;
+	}
+	else if (data->map->player == 'E')
+	{
+		data->ray->dir_playerX = 1;
+		data->ray->dir_playerY = 0;
+	}
+}
 
 void	init_struct(t_parse *data)
 {
@@ -18,6 +42,7 @@ void	init_struct(t_parse *data)
 	data->ray = malloc(sizeof(t_raycast));
 	data->ray->pos_playerX = data->map->player_x; //devrait peut-être aller chercher la position où est N dans la map
 	data->ray->pos_playerY = data->map->player_y;
+	//init_player_pos(data);
 	data->ray->dir_playerX = -1; //devrait chercher si player est N, W, E or S
 	data->ray->dir_playerY = 0;
 	data->ray->plane_playX = 0;
@@ -133,16 +158,16 @@ void	add_some_colours(t_parse *data, int index)
 		if (data->ray->side == 1)
 		{
 			if (data->ray->ray_dirY < 0)
-				mlx_put_pixel(data->image, index, i, 0xFF6F00FF);
+				mlx_put_pixel(data->image, index, i, 0xFF6F00FF); //orange
 			else
-				mlx_put_pixel(data->image, index, i, 0x870000FF);
+				mlx_put_pixel(data->image, index, i, 0x870000FF); //red
 		}
 		else if (data->ray->side == 0)
 		{
 			if(data->ray->ray_dirX > 0)
-				mlx_put_pixel(data->image, index, i, 0xFF00FFFF); //last arg will be int **array
+				mlx_put_pixel(data->image, index, i, 0xFF00FFFF); //pink; last arg will be int **array
 			else
-				mlx_put_pixel(data->image, index, i, 0xF4D800FF);
+				mlx_put_pixel(data->image, index, i, 0xF4D800FF); //yellow
 		}
 		i++;
 	}
