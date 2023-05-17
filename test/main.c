@@ -4,33 +4,60 @@
 #include <memory.h>
 #include "../inc/Cub3D.h"
 
+int create_color(int red, int green, int blue, int trans)
+{
+	return (red << 24 | green << 16 | blue << 8 | trans);
+}
+
 int main(void)
 {
 	mlx_t				*mlx;
 	static	mlx_image_t	*image;
-	int					y;
-	int					x;
+	xpm_t				*wall;
+	int					**tab;
+	uint32_t			y;
+	uint32_t			x;
+	int					count;
 
 	y = 0;
 	x = 0;
+	count = 0;
 	if (!(mlx = mlx_init(1920, 1080, "P'tit carré cheap", true)))
 	{
 		mlx_strerror(mlx_errno); //fonction a utiliser pour gerer les erreurs
 		return(EXIT_FAILURE);
 	}
-	if(!(image = mlx_new_image(mlx, 100, 100)))
+	if(!(image = mlx_new_image(mlx, 800, 800)))
 	{
 		mlx_close_window(mlx);//ferme la fenetre
 		return(EXIT_FAILURE);
 	}
-	while (y <= 99)
+	wall = malloc(sizeof(xpm_t));
+	tab = malloc(sizeof(int) * (wall->texture.height + 1));
+	wall = mlx_load_xpm42("/Users/vjean/Desktop/Cub3D/textures/Stardew-Brick-Wall-Pizza.xpm42");
+	while (y < wall->texture.height)
 	{
-		while (x <= 99)
+		tab[y] = malloc(sizeof(int) * (wall->texture.width + 1));
+		while (x < wall->texture.width)
 		{
-			if ((x % 2) == 0)
-				mlx_put_pixel(image, x, y, 0xff0000ff);
-			else if ((x % 2) == 1)
-				mlx_put_pixel(image, x, y, 0x0000ffff);
+			tab[y][x] = create_color(wall->texture.pixels[count + 0], \
+			wall->texture.pixels[count + 1], wall->texture.pixels[count + 2],\
+			wall->texture.pixels[count + 3]);
+			x++;
+			count += 4;
+		}
+		tab[y][x] = '\0';
+		x = 0;
+		y++;
+	}
+	tab[y] = NULL;
+	x = 0;
+	y = 0;
+	while (y < wall->texture.height)
+	{
+		while (x < wall->texture.width)
+		{
+			mlx_put_pixel(image, x, y, tab[y][x]);
 			x++;
 		}
 		x = 0;

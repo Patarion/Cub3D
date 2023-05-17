@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:15:04 by vjean             #+#    #+#             */
-/*   Updated: 2023/05/15 13:47:47 by vjean            ###   ########.fr       */
+/*   Updated: 2023/05/16 11:34:11 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ void	init_player_pos(t_parse *data)
 	if (data->map->player == 'N')
 	{
 		data->ray->dir_playerX = 0;
-		data->ray->dir_playerY = 1;
+		data->ray->dir_playerY = -1;
 	}
 	else if (data->map->player == 'S')
 	{
 		data->ray->dir_playerX = 0;
-		data->ray->dir_playerY = -1;
+		data->ray->dir_playerY = 1;
 	}
 	else if (data->map->player == 'W')
 	{
@@ -36,108 +36,111 @@ void	init_player_pos(t_parse *data)
 	}
 }
 
+void init_plane(t_parse *data)
+{
+	data->ray->plane_X = data->ray->dir_playerY * -0.66;
+	if (data->ray->dir_playerX != 0)
+		data->ray->plane_Y = data->ray->dir_playerX * 0.66;
+	else
+		data->ray->plane_Y = 0.0;
+}
+
+void	setup_struct(t_parse *data)
+{
+	data->ray = malloc(sizeof(t_raycast));
+	data->image = mlx_new_image(data->mlx, w, h);
+	init_player_pos(data);
+	init_plane(data);
+}
+
 void	init_struct(t_parse *data)
 {
-	data->image = mlx_new_image(data->mlx, w, h);
-	data->ray = malloc(sizeof(t_raycast));
-	data->ray->pos_playerX = data->map->player_x; //devrait peut-être aller chercher la position où est N dans la map
-	data->ray->pos_playerY = data->map->player_y;
-	init_player_pos(data);
-	// data->ray->dir_playerX = -1; //devrait chercher si player est N, W, E or S
-	// data->ray->dir_playerY = 0;
-	data->ray->plane_playX = 0;
-	data->ray->plane_playY = 0.66;
-	data->ray->hit = 0;
+	data->ray->pos_X = (int)data->map->player_x;//verifie si doit etre int ou double...
+	data->ray->pos_Y = (int)data->map->player_y;
 }
 
-void	where_am_i(t_parse *data)
+void	mesure_delta(t_parse *data)
 {
-	data->map->player_x = (int)data->ray->pos_playerX;
-	data->map->player_y = (int)data->ray->pos_playerY;
+	if (data->ray->ray_dirX == 0)
+		data->ray->delta_X = 1e30;
+	else
+		data->ray->delta_X = fabs(1 / data->ray->ray_dirX);
+	if (data->ray->ray_dirY == 0)
+		data->ray->delta_Y = 1e30;
+	else
+		data->ray->delta_Y = fabs(1 / data->ray->ray_dirY);
 }
 
-void	mesure_ray(t_parse *data)
-{
-	data->ray->furtherX_dist = fabs(1 / data->ray->ray_dirX);
-	data->ray->furtherY_dist = fabs(1 / data->ray->ray_dirY);
-}
-
-//before DDA, need to calculate sideX_dist and sideY_dist as well as indicate
-//we step forward or backward on x axis and y axis
 void	prep_dda(t_parse *data)
 {
-	if (data->ray->ray_dirX < 0) //direction derrière??
+	if (data->ray->ray_dirX < 0) //vers gauche
 	{
 		data->ray->step_x = -1;
-		data->ray->sideX_dist = (data->ray->pos_playerX - data->map->player_x) * data->ray->furtherX_dist;
+		data->ray->sideX_dist = (data->ray->pos_X - data->map->player_x) * data->ray->delta_X;
 	}
 	else
 	{
-		data->ray->step_x = 1; //direction vers l'avant?
-		data->ray->sideX_dist = (data->map->player_x + 1.0 - data->ray->pos_playerX) * data->ray->furtherX_dist;
+		data->ray->step_x = 1; //vers droite
+		data->ray->sideX_dist = (data->map->player_x + 1.0 - data->ray->pos_X) * data->ray->delta_X;
 	}
-	if (data->ray->ray_dirY < 0) //direction derrière??
+	if (data->ray->ray_dirY < 0) //en arriere
 	{
 		data->ray->step_y = -1;
-		data->ray->sideY_dist = (data->ray->pos_playerY - data->map->player_y) * data->ray->furtherY_dist;
+		data->ray->sideY_dist = (data->ray->pos_Y - data->map->player_y) * data->ray->delta_Y;
 	}
 	else
 	{
-		data->ray->step_y = 1;
-		data->ray->sideY_dist = (data->map->player_y + 1.0 - data->ray->pos_playerY) * data->ray->furtherY_dist;
+		data->ray->step_y = 1; //en avant
+		data->ray->sideY_dist = (data->map->player_y + 1.0 - data->ray->pos_Y) * data->ray->delta_Y;
 	}
 }
 
 void	dda_algo(t_parse *data)
 {
-	while (data->ray->hit == 0) //as long as we didn't hit a wall
+	while (1) //peut-etre mettre variable hit
 	{
-		//check for the next map square to jump; either x-dir or y-dir
 		if (data->ray->sideX_dist < data->ray->sideY_dist)
 		{
-			data->ray->sideX_dist += data->ray->furtherX_dist;
-			data->map->player_x += data->ray->step_x;
+			data->ray->sideX_dist += data->ray->delta_X;
+			data->ray->pos_X += data->ray->step_x;
 			data->ray->side = 0;
 		}
 		else
 		{
-			data->ray->sideY_dist += data->ray->furtherY_dist;
-			data->map->player_y += data->ray->step_y;
+			data->ray->sideY_dist += data->ray->delta_Y;
+			data->ray->pos_Y += data->ray->step_y;
 			data->ray->side = 1;
 		}
 		//hit a wall or not??
-		if (data->map->map[data->map->player_y][data->map->player_x] == '1')//or should I put > 0?? We know the wall is 1
-			data->ray->hit = 1;
+		if (data->map->map[data->ray->pos_Y][data->ray->pos_X] == '1')//or should I put > 0?? We know the wall is 1
+			break ;
 	}
-	data->ray->hit = 0;
 }
 
-void	get_perpendicular(t_parse *data)
+void	get_perpendicular(t_raycast *ray) //to avoid fish eye!
 {
-	if (data->ray->side == 0)
-		data->ray->perpendicular_wallDist = data->ray->sideX_dist - data->ray->furtherX_dist;
+	if (ray->side == 0)
+		ray->perpendicular_wallDist = ray->sideX_dist - ray->delta_X;
 	else
-		data->ray->perpendicular_wallDist = data->ray->sideY_dist - data->ray->furtherY_dist;
+		ray->perpendicular_wallDist = ray->sideY_dist - ray->delta_Y;
 }
 
-void	draw_line(t_parse *data)
+void	draw_line(t_raycast *ray)
 {
+	int	line_height;
 	//to calculate height of line to draw on screen
-	data->ray->line_height = (int)(h / data->ray->perpendicular_wallDist);
-
+	line_height = (int)(h / ray->perpendicular_wallDist);
 	//calculate lowest and highest pixel to fill in current "stripe"
-	data->ray->draw_start_pt = -data->ray->line_height / 2 + h / 2; //BEDMAS
-	if (data->ray->draw_start_pt < 0)
-		data->ray->draw_start_pt = 0;
-	data->ray->draw_end_pt = data->ray->line_height / 2 + h / 2; //BEDMAS
-	if (data->ray->draw_end_pt >= h)
-		data->ray->draw_end_pt = h - 1;
+	ray->draw_start_pt = -line_height / 2 + h / 2;
+	if (ray->draw_start_pt < 0)
+		ray->draw_start_pt = 0;
+	ray->draw_end_pt = line_height / 2 + h / 2;
+	if (ray->draw_end_pt >= h)
+		ray->draw_end_pt = h - 1;
 }
 
 void	add_some_colours(t_parse *data, int index)
 {
-	//mlx_put_pixel to draw the line or not??? and add colours?? Just need a uint32_t colours
-	//while loop tant que start est plus petit ou egal a end. A voir si besoin du egal ou non
 	int	i;
 
 	i = 0;
@@ -148,25 +151,18 @@ void	add_some_colours(t_parse *data, int index)
 	}
 	while (i < data->ray->draw_end_pt) //add texture here for walls
 	{
-		//step 1: which orientation? N, S, E or W. look at my raycast. Which orientation in my grid
-		//step 2: raycast where am I? left to right and up and down. print data->xpm->EA (for example)
-//		if(side == 0 && rayDirX > 0) texX = texWidth - texX - 1;
-//      if(side == 1 && rayDirY < 0) texX = texWidth - texX - 1;
-		//need texture coordinates: texture_y and texture_x. Int or double? INT
-		//need to add a check to see side N, S, E, W to send the correct texture. In an if condition to set the position
-		//then, we will add the pixel of our textures
 		if (data->ray->side == 1)
 		{
-			if (data->ray->ray_dirY < 0)
+			if (data->ray->ray_dirY < 0) //south
 				mlx_put_pixel(data->image, index, i, 0xFF6F00FF); //orange
-			else
+			else //north
 				mlx_put_pixel(data->image, index, i, 0x870000FF); //red
 		}
 		else if (data->ray->side == 0)
 		{
-			if(data->ray->ray_dirX > 0)
-				mlx_put_pixel(data->image, index, i, 0xFF00FFFF); //pink; last arg will be int **array
-			else
+			if(data->ray->ray_dirX > 0) //east
+				mlx_put_pixel(data->image, index, i, 0xFF00FFFF); //pink;
+			else //west
 				mlx_put_pixel(data->image, index, i, 0xF4D800FF); //yellow
 		}
 		i++;
@@ -180,24 +176,24 @@ void	add_some_colours(t_parse *data, int index)
 
 void	go_raycast(t_parse *data)
 {
-	int	index;
+	int		index;
+	double	cameraX; //"les yeux" du joueur
 
 	index = 0;
-	mlx_image_to_window(data->mlx, data->image, 0, 0); //protect
+	mlx_image_to_window(data->mlx, data->image, 0, 0);
 	while (index < w)
 	{
-		//calculate ray position and direction
-		data->ray->cameraX = (2 * index) / (double)w - 1; //x-coordinate in camera space //good
-		data->ray->ray_dirX = data->ray->dir_playerX + (data->ray->plane_playX * data->ray->cameraX); //good
-		data->ray->ray_dirY = data->ray->dir_playerY + (data->ray->plane_playY * data->ray->cameraX); //good
-		where_am_i(data); //good
-	//	mesure_ray(data); //review
-	//	prep_dda(data); //review
-	//	dda_algo(data); //review
-	//	get_perpendicular(data); //review
-		draw_line(data); //good
-		add_some_colours(data, index); //good
-		//add_texture(data); //add it here or not??
+		init_struct(data);
+		cameraX = (2 * index) / (double)w - 1;
+		data->ray->ray_dirX = data->ray->dir_playerX + data->ray->plane_X * cameraX;
+		data->ray->ray_dirY = data->ray->dir_playerY + data->ray->plane_Y * cameraX;
+		mesure_delta(data);
+		prep_dda(data);
+		dda_algo(data);
+		get_perpendicular(data->ray);
+		draw_line(data->ray);
+		add_some_colours(data, index);
+		add_texture(data);
 		index++;
 	}
 }
@@ -209,7 +205,7 @@ void	start_raycast(t_parse *data)
 		mlx_strerror(mlx_errno); //fonction a utiliser pour gerer les erreurs
 		exit(EXIT_FAILURE); //do we need to change the error message? to make sure stuff is free?
 	}
-	init_struct(data);
+	setup_struct(data);
 	go_raycast(data);
 	mlx_key_hook(data->mlx, key_event, (void*)data);
 	mlx_loop(data->mlx); //add keypress avant loop
