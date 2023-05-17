@@ -29,13 +29,7 @@ typedef struct s_map {
     int     player_x; //current square of the map, in the x axis (mapX)
     int     player_y; //current square of the map, in the y axis (mapY)
 	int		nb_lines;
-    int     texture_we;
-    int     texture_ea;
-    int     texture_so;
-    int     texture_no;
-    int     texture_x;
-    int     texture_y;
-    int     **array_textures;
+ 
 
 } t_map;
 
@@ -44,6 +38,16 @@ typedef struct s_xpm{
     xpm_t   *SO;
     xpm_t   *EA;
     xpm_t   *WE;
+    int     texture_we;
+    int     texture_ea;
+    int     texture_so;
+    int     texture_no;
+    int     texture_x;
+    int     texture_y;
+    int     **tab_so_tex;
+    int     **tab_no_tex;
+    int     **tab_ea_tex;
+    int     **tab_we_tex;
 }   t_xpm;
 typedef struct s_raycast {
     int     pos_X; //start position of player on x
