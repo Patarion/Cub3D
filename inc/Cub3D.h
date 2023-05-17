@@ -26,8 +26,8 @@ typedef struct s_map {
     char    player;
     char    **map;
     char    direction;
-    int     player_x; //current square of the map, in the x axis (mapX)
-    int     player_y; //current square of the map, in the y axis (mapY)
+    double  player_x; //current square of the map, in the x axis (mapX)
+    double  player_y; //current square of the map, in the y axis (mapY)
 	int		nb_lines;
  
 
@@ -68,7 +68,7 @@ typedef struct s_raycast {
     int     step_y; //to go in y first
     int     hit; //flag to check if a wall was hit or not; 0 = no hit
     int     side; //flag to check if it was a NS or EW wall hit. sideX_dist < sideY_dist = side 0. sideX_dist > sideY_dist = side 1.
-    int     line_height; //to know the height of the line to draw
+    double  line_height; //to know the height of the line to draw
     int     draw_start_pt;
     int     draw_end_pt;
 } t_raycast;
@@ -132,6 +132,7 @@ void	go_raycast(t_parse *data);
 
 /*      TEXTURE         */
 void	add_texture(t_parse *data);
+void	add_some_colours(t_parse *data, int index);
 
 /*		KEY_EVENT		*/
 void	key_event(struct mlx_key_data key, void *data);
