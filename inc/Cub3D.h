@@ -26,8 +26,8 @@ typedef struct s_map {
     char    player;
     char    **map;
     char    direction;
-    int     player_x; //current square of the map, in the x axis (mapX)
-    int     player_y; //current square of the map, in the y axis (mapY)
+    double  player_x; //current square of the map, in the x axis (mapX)
+    double  player_y; //current square of the map, in the y axis (mapY)
 	int		nb_lines;
     int     texture_we;
     int     texture_ea;
@@ -128,6 +128,7 @@ void	go_raycast(t_parse *data);
 
 /*      TEXTURE         */
 void	add_texture(t_parse *data);
+void	add_some_colours(t_parse *data, int index);
 
 /*		KEY_EVENT		*/
 void	key_event(struct mlx_key_data key, void *data);

@@ -18,7 +18,7 @@ void	init_struct(t_parse *data)
 	data->ray = malloc(sizeof(t_raycast));
 	data->ray->pos_playerX = data->map->player_x; //devrait peut-être aller chercher la position où est N dans la map
 	data->ray->pos_playerY = data->map->player_y;
-	data->ray->dir_playerX = -1; //devrait chercher si player est N, W, E or S
+	data->ray->dir_playerX = 1; //devrait chercher si player est N, W, E or S
 	data->ray->dir_playerY = 0;
 	data->ray->plane_playX = 0;
 	data->ray->plane_playY = 0.66;
@@ -27,8 +27,8 @@ void	init_struct(t_parse *data)
 
 void	where_am_i(t_parse *data)
 {
-	data->map->player_x = (int)data->ray->pos_playerX;
-	data->map->player_y = (int)data->ray->pos_playerY;
+	data->ray->pos_playerX = data->map->player_x;
+	data->ray->pos_playerY = data->map->player_y;
 }
 
 void	mesure_ray(t_parse *data)
@@ -77,17 +77,17 @@ void	dda_algo(t_parse *data)
 		if (data->ray->sideX_dist < data->ray->sideY_dist)
 		{
 			data->ray->sideX_dist += data->ray->furtherX_dist;
-			data->map->player_x += data->ray->step_x;
+			data->ray->pos_playerX += data->ray->step_x;
 			data->ray->side = 0;
 		}
 		else
 		{
 			data->ray->sideY_dist += data->ray->furtherY_dist;
-			data->map->player_y += data->ray->step_y;
+			data->ray->pos_playerY += data->ray->step_y;
 			data->ray->side = 1;
 		}
 		//hit a wall or not??
-		if (data->map->map[data->map->player_y][data->map->player_x] == '1')//or should I put > 0?? We know the wall is 1
+		if (data->map->map[(int)data->ray->pos_playerY][(int)data->ray->pos_playerX] == '1')//or should I put > 0?? We know the wall is 1
 			data->ray->hit = 1;
 	}
 	data->ray->hit = 0;
@@ -167,9 +167,9 @@ void	go_raycast(t_parse *data)
 	while (index < w)
 	{
 		//calculate ray position and direction
-		data->ray->cameraX = (2 * index) / (double)w - 1; //x-coordinate in camera space
-		data->ray->ray_dirX = data->ray->dir_playerX + (data->ray->plane_playX * data->ray->cameraX);
-		data->ray->ray_dirY = data->ray->dir_playerY + (data->ray->plane_playY * data->ray->cameraX);
+		data->ray->cameraX = 2 * index / (double)w - 1; //x-coordinate in camera space
+		data->ray->ray_dirX = data->ray->dir_playerX + data->ray->plane_playX * data->ray->cameraX;
+		data->ray->ray_dirY = data->ray->dir_playerY + data->ray->plane_playY * data->ray->cameraX;
 		where_am_i(data);
 		mesure_ray(data);
 		prep_dda(data);

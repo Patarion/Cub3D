@@ -91,5 +91,5 @@ void	GetTmpMap(t_parse *data, int fd)
 	data->map->map[i] = NULL;
 //	print_double_tab(data->map->map);
 	GetPlayerPoint(data->map);
-	printf("Le joueur est à la position Y : %d et X : %d\n", data->map->player_y, data->map->player_x);
+	printf("Le joueur est à la position Y : %f et X : %f\n", data->map->player_y, data->map->player_x);
 }
