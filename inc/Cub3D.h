@@ -46,19 +46,19 @@ typedef struct s_xpm{
     xpm_t   *WE;
 }   t_xpm;
 typedef struct s_raycast {
-    double  pos_playerX; //start position of player on x
-    double  pos_playerY; //start position of player on y
+    int     pos_X; //start position of player on x
+    int     pos_Y; //start position of player on y
     double  dir_playerX; //initial  director of vector of the player on x
     double  dir_playerY; //initial director of vector of the player on y
-    double  plane_playX; //camera plane of the player on X
-    double  plane_playY; //camera plane of the player on Y
+    double  plane_X; //camera plane of the player on X
+    double  plane_Y; //camera plane of the player on Y
     double  cameraX; //x-coordinate in camera space
     double  ray_dirX; //ray direction on x
     double  ray_dirY; //ray direction on y
     double  sideX_dist; //length of ray from current pos to next x
     double  sideY_dist; //length of ray from current pos to next y
-    double  furtherX_dist; //distance/length of ray from 1 x-side to the next x-side; not at starting point; further on the line
-    double  furtherY_dist; //distance/length of ray from 1 y-side to the next y-side
+    double  delta_X; //distance/length of ray from 1 x-side to the next x-side; not at starting point; further on the line
+    double  delta_Y; //distance/length of ray from 1 y-side to the next y-side
     double  perpendicular_wallDist; //distance/length from the point hit on the wall to the "camera plane" line.
     int     step_x; //to go in x first
     int     step_y; //to go in y first
