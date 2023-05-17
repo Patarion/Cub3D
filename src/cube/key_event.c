@@ -27,13 +27,22 @@ void	rotate_cam(struct mlx_key_data key, t_raycast *ray)
 	}
 }
 
+void	move_event(struct mlx_key_data key, t_parse *data)
+{
+	
+}
+
 void key_event(struct mlx_key_data key, void *data)
 {
 	t_parse *tmp;
 
 	tmp = data;
-	//printf("Key pressed : %d\n", key.key);
 	if (key.key == 263 || key.key == 262)
 		rotate_cam(key, tmp->ray);
+	if (key.key == 87 || key.key == 65 || key.key == 68 || key.key == 83)
+		move_event(key, tmp);
+	printf("La touche appuyée est %d\n", key.key);
 	go_raycast(tmp);
 }
+
+// 87 == w | 65 == a | 68 == d | 83 == s
