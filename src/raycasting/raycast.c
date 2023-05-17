@@ -6,11 +6,15 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:15:04 by vjean             #+#    #+#             */
-/*   Updated: 2023/05/16 11:34:11 by vjean            ###   ########.fr       */
+/*   Updated: 2023/05/17 11:03:18 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/Cub3D.h"
+
+/**
+* @param data blabla
+*/
 
 void	init_player_pos(t_parse *data)
 {
@@ -139,7 +143,7 @@ void	draw_line(t_raycast *ray)
 		ray->draw_end_pt = h - 1;
 }
 
-void	add_some_colours(t_parse *data, int index)
+void	add_tex_wall(t_parse *data, int index)
 {
 	int	i;
 
@@ -192,8 +196,9 @@ void	go_raycast(t_parse *data)
 		dda_algo(data);
 		get_perpendicular(data->ray);
 		draw_line(data->ray);
-		add_some_colours(data, index);
-		add_texture(data);
+		//function to look if side 1, 2, 3 to then, select the correct array of int
+		//add_texture(data);
+		add_tex_wall(data, index);
 		index++;
 	}
 }
