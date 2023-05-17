@@ -20,6 +20,8 @@ static const char *g_dir_tab[5] = {"N", "E", "S", "W", NULL};
 
 enum e_error_code	{GOOD, PATH, COLOR, MAP, PLAYER, CUB_FILE};
 
+struct t_parse;
+
 typedef struct s_map {
     bool    first_line;
     bool    last_line;
@@ -33,22 +35,27 @@ typedef struct s_map {
 
 } t_map;
 
+typedef struct s_tex{
+    int     **tab;
+    int     width;
+    int     height;
+} t_tex;
+
 typedef struct s_xpm{
     xpm_t   *NO;
     xpm_t   *SO;
     xpm_t   *EA;
     xpm_t   *WE;
-    int     texture_we;
-    int     texture_ea;
-    int     texture_so;
-    int     texture_no;
-    int     texture_x;
-    int     texture_y;
-    int     **tab_so_tex;
-    int     **tab_no_tex;
-    int     **tab_ea_tex;
-    int     **tab_we_tex;
+    int     width;
+    int     height;
+    t_tex     *tab_no_tex;
+    t_tex     *tab_so_tex;
+    t_tex     *tab_ea_tex;
+    t_tex     *tab_we_tex;
+    struct t_parse *data;
 }   t_xpm;
+
+
 typedef struct s_raycast {
     int     pos_X; //start position of player on x
     int     pos_Y; //start position of player on y

@@ -8,8 +8,8 @@
 			"type": "lldb",
 			"request": "launch",
 			"name": "Debug",
-			"program": "/Users/vjean/Desktop/Cub3D/mlx",
-			"args": [""],
+			"program": "/Users/vjean/Desktop/Cub3D/cub3d",
+			"args": ["map.cub"],
 			"cwd": "${workspaceFolder}"
 		}
 	]

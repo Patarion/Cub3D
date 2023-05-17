@@ -34,7 +34,7 @@ int main(void)
 	}
 	wall = malloc(sizeof(xpm_t));
 	tab = malloc(sizeof(int) * (wall->texture.height + 1));
-	wall = mlx_load_xpm42("/Users/vjean/Desktop/Cub3D/textures/Stardew-Brick-Wall-Multi-Colored;.xpm42");
+	wall = mlx_load_xpm42("/Users/vjean/Desktop/Cub3D/textures/Stardew-Brick-Wall-Multi-Colored.xpm42");
 	while (y < wall->texture.height)
 	{
 		tab[y] = malloc(sizeof(int) * (wall->texture.width + 1));
@@ -71,4 +71,9 @@ int main(void)
 	}
 	mlx_loop(mlx);
 	mlx_terminate(mlx);
+}
+
+if (data->ray->ray_dirY < 0)
+{
+	put_pixel(data->, index, i, image[i % tex->height][index % tex->width]);
 }

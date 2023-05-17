@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 13:15:04 by vjean             #+#    #+#             */
-/*   Updated: 2023/05/17 11:03:18 by vjean            ###   ########.fr       */
+/*   Updated: 2023/05/17 16:06:09 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,25 @@ void	draw_line(t_raycast *ray)
 		ray->draw_end_pt = h - 1;
 }
 
+void	put_tex(t_tex *tex, mlx_image_t *image, int index, int count)
+{
+	int	x;
+	int	y;
+
+	x = 0;
+	y = 0;
+	while (y < tex->height) //comparer a quoi??
+	{
+		while (x < tex->width) //comparer a quoi??
+		{
+			mlx_put_pixel(image, index, count, tex->tab[y][x]);
+			x++;
+		}
+		x = 0;
+		y++;
+	}
+}
+
 void	add_tex_wall(t_parse *data, int index)
 {
 	int	i;
@@ -158,16 +177,16 @@ void	add_tex_wall(t_parse *data, int index)
 		if (data->ray->side == 1)
 		{
 			if (data->ray->ray_dirY < 0) //south
-				mlx_put_pixel(data->image, index, i, 0xFF6F00FF); //orange
+				mlx_put_pixel(data->image, index, i, data->xpm->tab_so_tex->tab[i % data->xpm->tab_so_tex->height][index % data->xpm->tab_so_tex->width]); //orange
 			else //north
-				mlx_put_pixel(data->image, index, i, 0x870000FF); //red
+				mlx_put_pixel(data->image, index, i, data->xpm->tab_no_tex->tab[i % data->xpm->tab_no_tex->height][index % data->xpm->tab_no_tex->width]); //red
 		}
 		else if (data->ray->side == 0)
 		{
 			if(data->ray->ray_dirX > 0) //east
-				mlx_put_pixel(data->image, index, i, 0xFF00FFFF); //pink;
+				mlx_put_pixel(data->image, index, i, data->xpm->tab_ea_tex->tab[i % data->xpm->tab_ea_tex->height][index % data->xpm->tab_ea_tex->width]); //pink;
 			else //west
-				mlx_put_pixel(data->image, index, i, 0xF4D800FF); //yellow
+				mlx_put_pixel(data->image, index, i, data->xpm->tab_we_tex->tab[i % data->xpm->tab_we_tex->height][index % data->xpm->tab_we_tex->width]); //yellow
 		}
 		i++;
 	}
@@ -197,7 +216,6 @@ void	go_raycast(t_parse *data)
 		get_perpendicular(data->ray);
 		draw_line(data->ray);
 		//function to look if side 1, 2, 3 to then, select the correct array of int
-		//add_texture(data);
 		add_tex_wall(data, index);
 		index++;
 	}
