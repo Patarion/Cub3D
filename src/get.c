@@ -6,7 +6,7 @@
 /*   By: vjean <vjean@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 14:29:56 by vjean             #+#    #+#             */
-/*   Updated: 2023/05/04 14:30:00 by vjean            ###   ########.fr       */
+/*   Updated: 2023/05/16 11:11:28 by vjean            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ void	GetPlayerPoint(t_map *map_data)
 		{
 			if (ft_charsetcmp(map_data->map[y][x], "NSEW") == 0)
 			{
-				map_data->player_x = x;
-				map_data->player_y = y;
+				map_data->player_x = x + 0.5;
+				map_data->player_y = y + 0.5;
 				return ;
 			}
 			x++;
